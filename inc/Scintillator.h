@@ -27,5 +27,42 @@
 #define scint_bot7 14
 #define scint_bot8 15
 
+#include <vector>
+#include <algorithm>
+
+namespace Tracking{
+
+class Scintillator{
+private:
+  //Dimension of Scintillator, not required for the time being
+  //May be required in future
+  double fLength;
+  double fBreadth;
+  double fHeight;
+
+  bool fScintHit;
+
+public:
+  Scintillator():fLength(0),fBreadth(0),fHeight(0), fScintHit(false) {}
+  Scintillator(double length, double breadth, double height=1) :
+    fLength(length), fBreadth(breadth), fHeight(height), fScintHit(false) {}
+  ~Scintillator(){}
+
+};//end of Scintillator class
+
+
+class ScintillatorPlane{
+private:
+  int fScintTotal;
+  std::vector<Scintillator*> fScintillatorPlane;
+
+public:
+  ScintillatorPlane(): fScintTotal(0){}
+  ~ScintillatorPlane(){}
+
+};//end of ScintillatorPlane class
+
+}//end of Tracking namespace
+
 
 #endif /* INC_SCINTILLATOR_H_ */

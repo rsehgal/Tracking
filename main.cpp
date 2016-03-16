@@ -68,6 +68,7 @@ int main(){
   OfflineAnalysis offAnal("6133.root");
   std::cout<<"Rpc Vector Size : "<<offAnal.fRpcVector.size()<<std::endl;
 
+
   //std::cout<<"Detector Name test : "<<offAnal.fRpcVector[1].GetName()<<std::endl; //Working
 
   //std::cout<<"---- Printing RPC's Info ----"<<std::endl;
