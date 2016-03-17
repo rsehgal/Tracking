@@ -16,6 +16,7 @@
 #include "Hodoscope.h"
 #include "InputFiles.h"
 #include "TDC.h"
+#include "Scintillator.h"
 
 //#include "RPC.h"
 
@@ -48,6 +49,7 @@ public:
 
     std::vector<TDC> fTdcVector;
     std::vector<RPC> fRpcVector; //Vector of RPCs
+    std::vector<ScintillatorPlane*> fScintPlaneVector;
 
     double timeWindow;
     int triggerBit;
@@ -114,6 +116,8 @@ public:
 	void ReadReferenceChamberInfo();
 
 	void ReadMappingInfo();
+	void ReadScintMapFileAndCreatePlane();
+
 
 
 

@@ -48,6 +48,7 @@ OfflineAnalysis::OfflineAnalysis(std::string filename, unsigned modulesCount) : 
       PrintTriggerInfo();
 
       ReadMappingInfo();
+      ReadScintMapFileAndCreatePlane();
 
         }
 OfflineAnalysis::~OfflineAnalysis(){}
@@ -66,6 +67,31 @@ void OfflineAnalysis::Init(){
     fData[i].resize(ChannelsCount);
     fBranches[i].resize(ChannelsCount);
   }
+}
+
+/*
+ * This funtion will create the scintillator planes
+ */
+void OfflineAnalysis::ReadScintMapFileAndCreatePlane(){
+  //ifstream map_file(inpfiles.GetMappingFileName());
+  ifstream map_file("scintMap.txt");
+  int scintId=0, moduleId=0, channelId=0;
+  int numOfPlane=0, numOfScintInEachPlane=0;
+  std::cout<<"ScintMapFile-Exist : "<<map_file.is_open()<<std::endl;
+    if (map_file.is_open()) {
+      map_file >> numOfPlane >> numOfScintInEachPlane;
+      numOfPlane=2;
+      numOfScintInEachPlane=4;
+      std::cout<<numOfPlane<<" , "<<numOfScintInEachPlane<<std::endl;
+      for(int i=0 ; i<numOfPlane ; i++){
+        fScintPlaneVector.push_back(new ScintillatorPlane(numOfScintInEachPlane,"ScintillatorPlane-"+std::to_string(i)));
+      }
+      /*while (map_file.good()) {
+        map_file >> scintId >> moduleId >> channelId ;
+
+      }*/
+    }
+    map_file.close();
 }
 
 void OfflineAnalysis::ReadMappingInfo(){
