@@ -5,7 +5,7 @@
 #include "base/Global.h"
 #include <string>
 
-typedef std::vector<int> Channel;
+using namespace Tracking;
 
 class Tree{
 	
