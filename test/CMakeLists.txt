@@ -1,9 +1,16 @@
 
-add_executable(main main.cpp ${sources} ${headers})
-target_link_libraries(main ${ROOT_LIBRARIES})
+set(TEST_EXECUTABLES ${CMAKE_SOURCE_DIR}/test/main.cpp
+${CMAKE_SOURCE_DIR}/test/ScintillatorTest.cpp
+${CMAKE_SOURCE_DIR}/test/TreeTest.cpp
+)
 
-add_executable(ScintillatorTest ScintillatorTest.cpp ${sources} ${headers})
-target_link_libraries(ScintillatorTest ${ROOT_LIBRARIES})
+macro(build_executables EXECUTABLES)
+  foreach(EXECUTABLE ${EXECUTABLES})
+    get_filename_component(TARGET_NAME ${EXECUTABLE} NAME_WE)
+    add_executable(${TARGET_NAME} ${EXECUTABLE} ${sources} ${headers})
+    target_link_libraries(${TARGET_NAME} ${ROOT_LIBRARIES})
+  endforeach()
+endmacro()                        
 
-add_executable(tree TreeTest.cpp ${sources} ${headers})
-target_link_libraries(tree ${ROOT_LIBRARIES})
+build_executables("${TEST_EXECUTABLES}")
+
