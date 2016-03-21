@@ -39,15 +39,20 @@ include_directories(AFTER SYSTEM ${ROOT_INCLUDE_DIR})
 
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/inc)
+include_directories(${PROJECT_SOURCE_DIR}/TreeExercise)
 
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/inc/*.h)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.cpp)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/inc/*.h ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.h)
 
-add_executable(main main.cpp ${sources} ${headers})
-target_link_libraries(main ${ROOT_LIBRARIES})
+file(GLOB CFG_FILES ${PROJECT_SOURCE_DIR}/CfgFiles/*)
+file(COPY ${CFG_FILES} DESTINATION ${PROJECT_SOURCE_DIR}/build)
 
-add_executable(ScintillatorTest ScintillatorTest.cpp ${sources} ${headers})
-target_link_libraries(ScintillatorTest ${ROOT_LIBRARIES})
+#add_executable(main main.cpp ${sources} ${headers})
+#target_link_libraries(main ${ROOT_LIBRARIES})
+
+#add_executable(ScintillatorTest ScintillatorTest.cpp ${sources} ${headers})
+#target_link_libraries(ScintillatorTest ${ROOT_LIBRARIES})
 
 add_subdirectory(TreeExercise)
+add_subdirectory(test)
 
