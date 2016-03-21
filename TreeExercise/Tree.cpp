@@ -34,8 +34,8 @@ void Tree::TreeW(){
 void Tree::TreeR(){
 
 	Channel *ch;
-	TFile *f = new TFile(rootFile.c_str());
-	TTree *t = (TTree*)f->Get("testTree");
+	f = new TFile(rootFile.c_str());
+	t = (TTree*)f->Get("testTree");
 	TBranch *b = t->GetBranch("channel");
 	t->SetBranchAddress("channel",&ch,&b);
 	Int_t nentries = t->GetEntries();
@@ -44,5 +44,23 @@ void Tree::TreeR(){
 		std::cout<<"val : "<<ch->at(1)<<std::endl;
 	}
 
+
+}
+
+void Tree::TreeR_V2(std::string bName, int entry){
+//TFile *
+   f = TFile::Open(rootFile.c_str(),"READ");
+   if (!f) { return; }
+   f->GetObject("testTree",t);
+   Channel *vpx = 0;
+   TBranch *bvpx = 0;
+   t->SetBranchAddress(bName.c_str(),&vpx,&bvpx);
+   Long64_t tentry = t->LoadTree(entry);
+   bvpx->GetEntry(tentry);
+   for (UInt_t j = 0; j < vpx->size(); ++j) {
+         std::cout<<"value : "<<vpx->at(j)<<" , ";         
+   }
+   std::cout<<std::endl;
+   t->ResetBranchAddresses();
 
 }
