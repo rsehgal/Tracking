@@ -84,7 +84,7 @@ public:
   TH1F* GetHistogram(); //Function to generate Histogram for Scintillator
 
   void DetectAndSetHit();
-  void DetectAndSetHit(bool t);
+  void DetectAndSetHit(int evNo);
 
 
 
@@ -130,6 +130,11 @@ public:
   void InitializeScintillatorPlane();
 
   void CreateHistogram();
+
+  bool IsShowerEvent(int evNo);
+
+  // This function returns that how many scintillators were fired in an event.
+  int GetShowerCount(){return fScintTotal;}
 
 };//end of ScintillatorPlane class
 

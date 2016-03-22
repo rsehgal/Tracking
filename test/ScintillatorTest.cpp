@@ -33,7 +33,7 @@ std::cout<<"----- Print Bottom Scintillator Names ------"<<std::endl;
   scintVector = topPlane.GetScintillatorPlane();
   for(int i = 0 ; i < scintVector.size() ; i++){
     std::cout<<"Name : "<< scintVector[i]->GetName() << " : ";
-    Channel *ch = scintVector[i]->GetEntry(1000);
+    Channel *ch = scintVector[i]->GetEntry(839);
     if(!ch->size())
       std::cout<<"No Data"<<std::endl;
     else{
@@ -43,12 +43,17 @@ std::cout<<"----- Print Bottom Scintillator Names ------"<<std::endl;
     std::cout<<std::endl;
     }
   }
-  TApplication *fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
-  topPlane.CreateHistogram();
-//  for(int i = 0 ; i < scintVector.size() ; i++){
-//    scintVector[i]->CreateHistogram();
-//  }
-  fApp->Run();
+  //TApplication *fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
+  bottomPlane.CreateHistogram();
+  //fApp->Run();
+
+  for(int i = 0 ; i< 1000 ; i++){
+    //std::cout<<"==============================================="<<std::endl;
+    if(topPlane.IsShowerEvent(i)){
+    std::cout<<"Event Num : "<< i << "  :: IsShowerEvent : "<< topPlane.IsShowerEvent(i) << "  :: ShowerCount : "
+             <<topPlane.GetShowerCount()<<std::endl;
+    }
+  }
 }
 
 

@@ -74,10 +74,11 @@ TH1F* Scintillator::GetHistogram(){
   int numOfEvents = t.GetNumOfEvents();
   std::cout<<"NumOf Events : "<<numOfEvents<<std::endl;
   for(int evNo= 0 ; evNo < numOfEvents ; evNo++){
-    Channel *ch = t.GetEntry(fBName,evNo);
+    //Channel *ch = t.GetEntry(fBName,evNo);
+    ch = t.GetEntry(fBName,evNo);
     if(ch->size()){
       for(int i = 0 ; i < ch->size() ; i++){
-    h->Fill(ch->at(i));
+        h->Fill(ch->at(i));
       }
     }
   }
@@ -86,7 +87,9 @@ TH1F* Scintillator::GetHistogram(){
 }
 
 
-void Scintillator::DetectAndSetHit(bool t){
+
+
+void Scintillator::DetectAndSetHit(int evNo){
 /*
 *  For the time being hard coding the information related to
 *  trigger module and channel.
@@ -95,15 +98,21 @@ void Scintillator::DetectAndSetHit(bool t){
 *  ModuleVector variable "modVector" should be filled after reading the ROOT file
 *
 */
+  fScintHit = false;
   ModuleVector modVector; // This should come prefilled from somewhere else. Here included just
                           // to make compiler happy, should be remove later on
-  Channel *trigMultiHit = modVector[0][31];
+  Tree t("6133.root","BSC_DATA_TREE");
+  Channel *trigMultiHit = t.GetEntry("Module2_LE_CH31",evNo);
   long trig = trigMultiHit->at(0);
-  Channel *scintMultiHit = modVector[fModuleId][fScintId];
-  long scintillator = scintMultiHit->at(0);
+  ch = t.GetEntry(fBName,evNo);
+  if(ch->size()){
+  long scintillator = ch->at(0);
   if(  scintillator > 0){
     if(abs(trig - scintillator) < scintMax) fScintHit=true;
   }
+  }
+
+  //std::cout<<"fScintHit : "<< fScintHit <<std::endl;
 }
 
 
@@ -111,9 +120,23 @@ void Scintillator::DetectAndSetHit(bool t){
  ***** Definition of ScintillatorPlane class *****
  *************************************************/
 
+bool ScintillatorPlane::IsShowerEvent(int evNo){
+  fScintTotal = 0;
+
+  //std::cout<<"ScintTotal Before : "<<fScintTotal<<std::endl;
+  int scintPlaneSize = fScintillatorPlane.size();
+  for(int i = 0 ; i < scintPlaneSize ; i++){
+    fScintillatorPlane[i]->DetectAndSetHit(evNo);
+  }
+  DetectTotalScintFired();
+  //std::cout<<"ScintTotal : "<<fScintTotal<<std::endl;
+  return (fScintTotal > 1);
+}
+
+
 void ScintillatorPlane::CreateHistogram(){
   int scintPlaneSize = fScintillatorPlane.size();
-  TCanvas *c1 = new TCanvas("c1","ScintillatorPlane",200,10,700,500);
+  TCanvas *c1 = new TCanvas("c1",fPlaneName.c_str(),200,10,700,500);
   c1->Divide(4,2);
   for(int i = 0 ; i < scintPlaneSize ; i++){
     c1->cd(i+1);
