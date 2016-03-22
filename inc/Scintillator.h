@@ -46,6 +46,9 @@ private:
   static int fId;//Static variable to increase whenever a new object is created.
   bool fScintHit;
 
+  Channel *ch;// Data structure to hold data for the scintillator
+  std::string fBName; // branch name in ROOT data Tree
+
 
 public:
   Scintillator();//:fLength(0),fBreadth(0),fHeight(0), fScintHit(false) {}
@@ -64,8 +67,12 @@ public:
   int GetChannelId(){return fScintId;}
   TRACKING_INLINE
   bool GetScintHit(){return fScintHit;}
+  TRACKING_INLINE
+  std::string GetName(){return fBName;} //will return the associated branch Name
 
   void DetectAndSetHit();
+  void DetectAndSetHit(bool t);
+
 
 
 
@@ -100,9 +107,14 @@ public:
   TRACKING_INLINE
   std::string GetPlaneName(){return fPlaneName;}
 
+  TRACKING_INLINE
+  std::vector<Scintillator*> GetScintillatorPlane(){return fScintillatorPlane;}
+
   void Print();
 
   void DetectTotalScintFired();
+
+  void InitializeScintillatorPlane();
 
 };//end of ScintillatorPlane class
 
@@ -110,3 +122,4 @@ public:
 
 
 #endif /* INC_SCINTILLATOR_H_ */
+
