@@ -30,4 +30,8 @@ class Tree{
 		Channel* GetEntry(std::string bName, int evNo);
 		
 
+		//Some statistical function for Generating Histograms
+		void CreateHistogram(std::string bName);
+
+
 };

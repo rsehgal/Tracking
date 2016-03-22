@@ -19,6 +19,9 @@ int main(){
   }
   std::cout<<std::endl;
 
+  //Creating histogram;
+  t.CreateHistogram("Module2_LE_CH31");
+
 #else
   Tree t("test.root","testTree");
   t.TreeR_V2("channel",45);
