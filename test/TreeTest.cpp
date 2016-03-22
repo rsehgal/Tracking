@@ -15,7 +15,7 @@ int main(){
   Tree t("6133.root","BSC_DATA_TREE");
   Channel *ch = t.GetEntry("Module2_LE_CH31",45);
   for(int i = 0 ; i  < ch->size() ; i++){
-  std::cout<<"value : "<<ch->at(0) <<" , ";
+  std::cout<<"value : "<<ch->at(i) <<" , ";
   }
   std::cout<<std::endl;
 

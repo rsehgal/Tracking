@@ -30,6 +30,8 @@
 #include <vector>
 #include <algorithm>
 #include"base/Global.h"
+#include "Tree.h"
+#include <TH1F.h>
 
 namespace Tracking{
 
@@ -49,12 +51,20 @@ private:
   Channel *ch;// Data structure to hold data for the scintillator
   std::string fBName; // branch name in ROOT data Tree
 
+  TH1F *h; //Histogram for the scillator
+
+
+  //DATA tree //should be kept some where else
+  Tree *t;
+
+
+
 
 public:
   Scintillator();//:fLength(0),fBreadth(0),fHeight(0), fScintHit(false) {}
   Scintillator(double length, double breadth, double height=1);// :
     //fLength(length), fBreadth(breadth), fHeight(height), fScintHit(false) {}
-  ~Scintillator(){}
+  ~Scintillator();
 
 
   TRACKING_INLINE
@@ -69,6 +79,9 @@ public:
   bool GetScintHit(){return fScintHit;}
   TRACKING_INLINE
   std::string GetName(){return fBName;} //will return the associated branch Name
+
+  Channel* GetEntry(int evNo); //Get Scintillator data for a particular event
+  TH1F* GetHistogram(); //Function to generate Histogram for Scintillator
 
   void DetectAndSetHit();
   void DetectAndSetHit(bool t);
@@ -115,6 +128,8 @@ public:
   void DetectTotalScintFired();
 
   void InitializeScintillatorPlane();
+
+  void CreateHistogram();
 
 };//end of ScintillatorPlane class
 

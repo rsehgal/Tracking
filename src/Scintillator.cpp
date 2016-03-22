@@ -7,6 +7,8 @@
 #include "Scintillator.h"
 #include <iostream>
 #include <sstream>
+#include <TCanvas.h>
+///#include "Tree.h"
 
 namespace Tracking{
 
@@ -20,8 +22,10 @@ Scintillator::Scintillator():fLength(0),fBreadth(0),fHeight(0), fScintHit(false)
   fId++;
   fScintId = fId;
   std::stringstream ss;
-  ss << "Module" << fModuleId <<"_LE_CH" << fScintId;
+  ss << "Module" << fModuleId+2 <<"_LE_CH" << fScintId;
   fBName = ss.str();
+  //t = new Tree("6133.root","BSC_DATA_TREE");
+  h = new TH1F("h",fBName.c_str(),100,20000,21000);
 
 }
 
@@ -33,6 +37,10 @@ Scintillator::Scintillator(double length, double breadth, double height) :
   std::stringstream ss;
   ss << "Module" << fModuleId <<"_LE_CH" << fScintId;
   fBName = ss.str();
+}
+
+Scintillator::~Scintillator(){//delete t;
+
 }
 
 void Scintillator::DetectAndSetHit(){
@@ -54,6 +62,29 @@ void Scintillator::DetectAndSetHit(){
     if(abs(trig - scintillator) < scintMax) fScintHit=true;
   }
 }
+
+Channel* Scintillator::GetEntry(int evNo){
+
+  Tree t("6133.root","BSC_DATA_TREE");
+  return t.GetEntry(fBName,evNo);
+}
+
+TH1F* Scintillator::GetHistogram(){
+  Tree t("6133.root","BSC_DATA_TREE");
+  int numOfEvents = t.GetNumOfEvents();
+  std::cout<<"NumOf Events : "<<numOfEvents<<std::endl;
+  for(int evNo= 0 ; evNo < numOfEvents ; evNo++){
+    Channel *ch = t.GetEntry(fBName,evNo);
+    if(ch->size()){
+      for(int i = 0 ; i < ch->size() ; i++){
+    h->Fill(ch->at(i));
+      }
+    }
+  }
+
+  return h;
+}
+
 
 void Scintillator::DetectAndSetHit(bool t){
 /*
@@ -80,6 +111,15 @@ void Scintillator::DetectAndSetHit(bool t){
  ***** Definition of ScintillatorPlane class *****
  *************************************************/
 
+void ScintillatorPlane::CreateHistogram(){
+  int scintPlaneSize = fScintillatorPlane.size();
+  TCanvas *c1 = new TCanvas("c1","ScintillatorPlane",200,10,700,500);
+  c1->Divide(4,2);
+  for(int i = 0 ; i < scintPlaneSize ; i++){
+    c1->cd(i+1);
+    fScintillatorPlane[i]->GetHistogram()->Draw();
+  }
+}
 
 ScintillatorPlane::ScintillatorPlane():
     fNumOfScintillators(8),
