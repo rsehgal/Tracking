@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.8.8)
-project(VecGeom)
+project(Tracking)
+
+#To put all the executables in build directory
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}) 
 
 enable_language(CXX)
 

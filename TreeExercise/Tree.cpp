@@ -8,7 +8,29 @@ Tree::Tree(){
 	rootFile = "test.root";
 }
 
-Tree::~Tree(){}
+Tree::Tree(std::string rootFl){
+
+  rootFile = rootFl;
+  f = TFile::Open(rootFile.c_str(),"READ");
+  if (!f) { return; }
+  f->GetObject("BSC_DATA_TREE",t);
+  numOfEvents = t->GetEntries();
+  //f->Close();
+
+}
+
+Tree::Tree(std::string rootFl, std::string treeName){
+
+  rootFile = rootFl;
+  f = TFile::Open(rootFile.c_str(),"READ");
+  if (!f) { return; }
+  f->GetObject(treeName.c_str(),t);
+  numOfEvents = t->GetEntries();
+  //f->Close();
+
+}
+
+Tree::~Tree(){ f->Close(); }
 
 void Tree::TreeW(){
 
@@ -49,9 +71,9 @@ void Tree::TreeR(){
 
 void Tree::TreeR_V2(std::string bName, int entry){
 //TFile *
-   f = TFile::Open(rootFile.c_str(),"READ");
-   if (!f) { return; }
-   f->GetObject("testTree",t);
+//   f = TFile::Open(rootFile.c_str(),"READ");
+//   if (!f) { return; }
+//   f->GetObject("testTree",t);
    Channel *vpx = 0;
    TBranch *bvpx = 0;
    t->SetBranchAddress(bName.c_str(),&vpx,&bvpx);
@@ -62,5 +84,17 @@ void Tree::TreeR_V2(std::string bName, int entry){
    }
    std::cout<<std::endl;
    t->ResetBranchAddresses();
+
+}
+
+Channel* Tree::GetEntry(std::string bName, int evNo){
+
+  Channel *vpx = 0;
+  TBranch *bvpx = 0;
+  t->SetBranchAddress(bName.c_str(),&vpx,&bvpx);
+  Long64_t tentry = t->LoadTree(evNo);
+  bvpx->GetEntry(tentry);
+  t->ResetBranchAddresses();
+  return vpx;
 
 }

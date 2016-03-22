@@ -20,10 +20,14 @@ class Tree{
 
 	public:
 		Tree();
+		Tree(std::string rootFl);
+		Tree(std::string rootFl, std::string treeName);
 		~Tree();
 		void TreeW();
 		void TreeR();
+		int GetNumOfEvents(){return numOfEvents;}
 		void TreeR_V2(std::string bName, int entry);
+		Channel* GetEntry(std::string bName, int evNo);
 		
 
 };
