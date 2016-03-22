@@ -130,7 +130,7 @@ bool ScintillatorPlane::IsShowerEvent(int evNo){
   }
   DetectTotalScintFired();
   //std::cout<<"ScintTotal : "<<fScintTotal<<std::endl;
-  return (fScintTotal > 1);
+  return (fScintTotal >= scint_multiplicity_max);
 }
 
 

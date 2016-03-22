@@ -21,6 +21,8 @@ typedef std::vector<Module> ModuleVector;
 
 #define scintMax 500
 
+#define scint_multiplicity_max 2
+
 #define Precision double
 #define TRACKING_INLINE inline
 }//end of Tracking namespace
