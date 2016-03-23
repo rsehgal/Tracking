@@ -16,17 +16,25 @@
 #include <string>
 #include "Statistics.h"
 
+#include "Scintillator.h"
+
+//Considering each RPC strip equivalent to Scintillator
+#define Rpc ScintillatorPlane
+#define RpcStrip Scintillator
+
 namespace Tracking {
 class RPC{
 private:
-	//Gap gap[3]; //0->topNarrow ; 1->topWide ; 2->Bottom
 	std::vector<Gap*> gap;
-	//Gap *gap;
-	//Gap gap_tn,gap_tw,gap_b;
 	FEB feb[3]; //0->(0-31) ; 1->(32-63) ; 2->(64-95)
 	std::string fName;
 	std::string fEtaPartition;
 	std::string fTriggerLayer;
+
+	int fNumOfChannels;
+	int fModuleId;
+	//std::vector<RpcStrip> fReadOut;
+	Rpc *rpc;//(2,96,"First-RPC");
 
 	Statistics stat;
 
@@ -46,6 +54,7 @@ public:
 		gap.push_back(new Gap());
 	}
 	RPC(std::string, Precision, Precision, Precision, int);
+	RPC(int moduleId, int numOfChannels, std::string rpcName);
 	~RPC(){}
 
 	void SetStatictics(){stat.SetStatistics(fName,map_station,fEtaPartition,fTriggerLayer);}
@@ -55,6 +64,11 @@ public:
 	TRACKING_INLINE
 	Gap GetGap(int i){
 		return *gap[i];
+	}
+
+	TRACKING_INLINE
+	Rpc* GetRpc(){
+	  return rpc;
 	}
 
 	TRACKING_INLINE
@@ -106,6 +120,15 @@ public:
 			std::cout<<feb[i]<<std::endl;
 		}
 
+	}
+
+	void PrintStripNames(){
+
+	  std::vector<RpcStrip*> stripVectorRpc = rpc->GetScintillatorPlane();
+	  std::cout<<"-----------------------------------------------------"<<std::endl;
+	       for(int i = 0 ; i < stripVectorRpc.size() ; i++){
+	         std::cout<<"Strip Name : "<< stripVectorRpc[i]->GetName() <<std::endl;
+	       }
 	}
 
 };//end of RPC class

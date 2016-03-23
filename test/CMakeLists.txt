@@ -3,6 +3,7 @@ set(TEST_EXECUTABLES ${CMAKE_SOURCE_DIR}/test/main.cpp
 ${CMAKE_SOURCE_DIR}/test/ScintillatorTest.cpp
 ${CMAKE_SOURCE_DIR}/test/TreeTest.cpp
 ${CMAKE_SOURCE_DIR}/test/StatTest.cpp
+${CMAKE_SOURCE_DIR}/test/RpcTest.cpp
 )
 
 macro(build_executables EXECUTABLES)
