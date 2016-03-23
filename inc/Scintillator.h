@@ -118,7 +118,7 @@ public:
   void SetPlaneName(std::string planeName){fPlaneName = planeName;}
 
   TRACKING_INLINE
-  std::string GetPlaneName(){return fPlaneName;}
+  std::string GetName(){return fPlaneName;}
 
   TRACKING_INLINE
   std::vector<Scintillator*> GetScintillatorPlane(){return fScintillatorPlane;}
@@ -130,11 +130,15 @@ public:
   void InitializeScintillatorPlane();
 
   void CreateHistogram();
+  void CreateHistogram2D();
+  void Create2DHistOfTimingAndChannels();
 
   bool IsShowerEvent(int evNo);
 
   // This function returns that how many scintillators were fired in an event.
   int GetShowerCount(){return fScintTotal;}
+
+
 
 };//end of ScintillatorPlane class
 

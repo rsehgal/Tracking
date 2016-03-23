@@ -8,6 +8,9 @@
 #include <iostream>
 #include <sstream>
 #include <TCanvas.h>
+#include <TH2F.h>
+#include <TApplication.h>
+#include <TFile.h>
 ///#include "Tree.h"
 
 namespace Tracking{
@@ -150,6 +153,85 @@ ScintillatorPlane::ScintillatorPlane():
     fPlaneName("Test-ScintillatorPlane"){
   InitializeScintillatorPlane();
   //CreatePlaneOfScintillators();
+}
+
+void ScintillatorPlane::CreateHistogram2D(){
+
+  int nxbins = 1000;
+  int xlow = 20000;
+  int xhigh = 21000;
+  int nybins = 150;
+  int ylow = -10;
+  int yhigh = 140;
+  Channel *trig = 0;
+  Channel *ch = 0;
+
+  TCanvas *c2 = new TCanvas("c2",fPlaneName.c_str(),200,10,700,500);
+  c2->Divide(1,1);
+  c2->cd(1);
+  Tree t("6133.root","BSC_DATA_TREE");
+  int numOfEvents = t.GetNumOfEvents();
+
+  //TH1F *hTrig = new TH1F("hTrig","TEST",100,20000,21000);
+  TH2F *h2d = new TH2F("h2d","Timing",nxbins,xlow,xhigh,nybins,ylow,yhigh);
+  for(int evNo= 0 ; evNo < numOfEvents ; evNo++){
+    trig  = t.GetEntry("Module2_LE_CH31",evNo);
+    h2d->Fill(trig->at(0),31);
+    for (int i = 0; i < fScintillatorPlane.size(); i++) {
+      ch = t.GetEntry(fScintillatorPlane[i]->GetName(), evNo);
+      if (ch->size()) {
+        for (int j = 0; j < ch->size(); j++) {
+          h2d->Fill(ch->at(j), fScintillatorPlane[i]->GetChannelId());
+        }
+      }
+    }
+  }
+  h2d->Draw();
+  h2d->Print();
+  //TFile f("hTrig.root","recreate"); //Open file, then write histo to it.
+  TFile::Open("hTrig.root","RECREATE");
+  h2d->Write();
+  c2->Modified();
+  c2->Update();
+}
+
+void ScintillatorPlane::Create2DHistOfTimingAndChannels(){
+ // Tree t("6133.root","BSC_DATA_TREE");
+  int numOfEvents = 10; //t.GetNumOfEvents();
+  int nxbins = 1000;
+  int xlow = 20000;
+  int xhigh = 21000;
+  int nybins = 150;
+  int ylow = -10;
+  int yhigh= 140;
+  Channel *trig = 0;
+  Channel *ch = 0;
+
+  //TApplication *fApp = new TApplication("Timing", NULL, NULL);
+  //TH2F *h2d = new TH2F("h2d","Timing",nxbins,xlow,xhigh,nybins,ylow,yhigh);
+  TCanvas *c1 = new TCanvas("c1",fPlaneName.c_str(),200,10,700,500);
+  TH1F *h = new TH1F("h","ABCD",100,20000,21000);
+  for(int evNo= 0 ; evNo < numOfEvents ; evNo++){
+    //trig  = t.GetEntry("Module2_LE_CH31",evNo);
+    //std::cout<<"Trig : "<< trig->at(0) <<std::endl;
+    //if(trig->size())
+    //h2d->Fill(trig->at(0),31);
+/*
+    for(int i = 0 ; i < fScintillatorPlane.size() ; i++) {
+      Channel *ch = t.GetEntry(fScintillatorPlane[i]->GetName(),evNo);
+      if(ch->size()){
+      for(int j = 0 ; j < ch->size() ; j++){
+        h2d->Fill(ch->at(j),fScintillatorPlane[i]->GetChannelId());
+      }
+     }
+    }
+*/
+
+  }
+  h->Draw();
+  //h2d->Draw();
+ // h2d->Write("timing.root");
+ // fApp->Run();
 }
 
 ScintillatorPlane::ScintillatorPlane(int numOfScintillators,std::string planeName) :

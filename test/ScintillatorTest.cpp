@@ -8,6 +8,7 @@
 #include "Scintillator.h"
 #include <iostream>
 #include <TApplication.h>
+#include "Statistics.h"
 
 using namespace Tracking;
 
@@ -45,15 +46,28 @@ std::cout<<"----- Print Bottom Scintillator Names ------"<<std::endl;
   }
   //TApplication *fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
   bottomPlane.CreateHistogram();
+  topPlane.CreateHistogram2D();
   //fApp->Run();
 
-  for(int i = 0 ; i< 1000 ; i++){
+ Statistics s;
+ //s.GenerateTimingHistogram();
+
+
+/*
+  int numEvents = 0;
+  for(int i = 0 ; i< numEvents ; i++){
     //std::cout<<"==============================================="<<std::endl;
     if(topPlane.IsShowerEvent(i)){
     std::cout<<"Event Num : "<< i << "  :: IsShowerEvent : "<< topPlane.IsShowerEvent(i) << "  :: ShowerCount : "
              <<topPlane.GetShowerCount()<<std::endl;
     }
   }
+*/
+
+/*  std::cout<<"+++++++++++++++++++++++++++++++++++++++++"<<std::endl;
+  TApplication *fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
+  topPlane.Create2DHistOfTimingAndChannels();
+  fApp->Run();*/
 }
 
 

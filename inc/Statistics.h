@@ -12,6 +12,10 @@
 #include "base/Global.h"
 #include <TH1F.h>
 #include <TH2F.h>
+#include "Scintillator.h"
+#include <TCanvas.h>
+#include <TFile.h>
+
 //#include "OfflineAnalysis.h"
 
 namespace Tracking{
@@ -45,7 +49,7 @@ namespace Tracking{
     int trg_windows_min;
     int trg_windows_max;// = 120; // Time window in ns.
     int delaytrg;// = 100;                                // Time in ns between: [master trigger] and [small counter]
-    int scint_multiplicity_max;// = 2;         // Number of counts at same time found in one SCINT layer (min. value = 2).
+    //int scint_multiplicity_max;// = 2;         // Number of counts at same time found in one SCINT layer (min. value = 2).
     bool master_trigger_cutedge;// = 0;        // Once enabled (=1) it does not consider trigger in lateral SCINT.
     int scint_max;// = 500;                    // Max distance in time between SCINT. (ns*10) for shower detection
     bool shower;// = 1;                        // Activates shower detection 1=ON, 0=OFF
@@ -106,6 +110,8 @@ namespace Tracking{
     void GenerateClusterMultiplicity();
     void GenerateCrossTalkProfile();
     void GenerateHitMultiplicity();
+
+    void GenerateTimingHistogram();
 
   };//end of Statistics class
 }//end of Tracking namespace
