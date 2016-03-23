@@ -32,6 +32,17 @@ Scintillator::Scintillator():fLength(0),fBreadth(0),fHeight(0), fScintHit(false)
 
 }
 
+Scintillator::Scintillator(int moduleId):fLength(0),fBreadth(0),fHeight(0), fScintHit(false) ,fModuleId(moduleId) {
+  fId++;
+  fScintId = fId;
+  std::stringstream ss;
+  ss << "Module" << fModuleId <<"_LE_CH" << fScintId;
+  fBName = ss.str();
+  //t = new Tree("6133.root","BSC_DATA_TREE");
+  h = new TH1F("h",fBName.c_str(),100,20000,21000);
+
+}
+
 Scintillator::Scintillator(double length, double breadth, double height) :
     fLength(length), fBreadth(breadth), fHeight(height), fScintHit(false), fModuleId(0) {
   fId++;
@@ -242,9 +253,24 @@ ScintillatorPlane::ScintillatorPlane(int numOfScintillators,std::string planeNam
     CreatePlaneOfScintillators();
 }
 
+ScintillatorPlane::ScintillatorPlane(int moduleId, int numOfScintillators, std::string planeName):
+    fNumOfScintillators(numOfScintillators),
+    fScintTotal(0),
+    fPlaneName(planeName){
+
+  InitializeScintillatorPlane();
+  CreatePlaneOfScintillators(moduleId);
+}
+
 void ScintillatorPlane::CreatePlaneOfScintillators(){
   for(int i = 0 ; i< fNumOfScintillators ; i++){
     fScintillatorPlane.push_back(new Scintillator());
+  }
+}
+
+void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId){
+  for(int i = 0 ; i< fNumOfScintillators ; i++){
+    fScintillatorPlane.push_back(new Scintillator(moduleId));
   }
 }
 

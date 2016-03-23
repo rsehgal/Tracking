@@ -93,8 +93,8 @@ void Statistics::GenerateCrossTalkProfile(){}
 void Statistics::GenerateHitMultiplicity(){}
 
 void Statistics::GenerateTimingHistogram(){
-  ScintillatorPlane topPlane(8,"Top-Plane");
-  ScintillatorPlane bottomPlane(8,"Bottom-Plane");
+  ScintillatorPlane topPlane(2,8,"Top-Plane");
+  ScintillatorPlane bottomPlane(2,8,"Bottom-Plane");
   int nxbins = 1000;
   int xlow = 20000;
   int xhigh = 21000;

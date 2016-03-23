@@ -62,11 +62,14 @@ private:
 
 public:
   Scintillator();//:fLength(0),fBreadth(0),fHeight(0), fScintHit(false) {}
+  Scintillator(int moduleId);
   Scintillator(double length, double breadth, double height=1);// :
     //fLength(length), fBreadth(breadth), fHeight(height), fScintHit(false) {}
   ~Scintillator();
 
 
+  TRACKING_INLINE
+  static void SetStartingId(int sId){fId = sId;}
   TRACKING_INLINE
   void SetModuleId(int moduleId){fModuleId = moduleId;}
   TRACKING_INLINE
@@ -102,10 +105,12 @@ private:
 public:
   ScintillatorPlane();//: fScintTotal(0), fNumOfScintillators(8){}
   ScintillatorPlane(int numOfScintillators, std::string planeName="Test-ScintillatorPlane");
+  ScintillatorPlane(int moduleId, int numOfScintillators, std::string planeName="Test-ScintillatorPlane");
 
   ~ScintillatorPlane(){}
 
   void CreatePlaneOfScintillators();
+  void CreatePlaneOfScintillators(int moduleId);
   void ReadScintMapFileAndCreatePlane();
 
   TRACKING_INLINE

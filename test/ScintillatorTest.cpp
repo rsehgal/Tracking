@@ -14,8 +14,8 @@ using namespace Tracking;
 
 int main(){
 
-  ScintillatorPlane topPlane(8,"Top-Plane");
-  ScintillatorPlane bottomPlane(8,"Bottom-Plane");
+  ScintillatorPlane topPlane(2,8,"Top-Plane");
+  ScintillatorPlane bottomPlane(2,8,"Bottom-Plane");
   topPlane.Print();
   bottomPlane.Print();
 
@@ -49,7 +49,28 @@ std::cout<<"----- Print Bottom Scintillator Names ------"<<std::endl;
   topPlane.CreateHistogram2D();
   //fApp->Run();
 
- Statistics s;
+   /*
+    * Trying to create Rpc Strips using Scintillators
+    */
+
+   Scintillator::SetStartingId(31);
+   ScintillatorPlane rpc1(2,96,"First-RPC");
+   Scintillator::SetStartingId(31);
+   ScintillatorPlane rpc2(3,96,"First-RPC");
+   //Printing the name of each strip to verify the creation of 96 strips of RPCs
+   std::vector<Scintillator*> scintVectorRpc = rpc1.GetScintillatorPlane();
+   for(int i = 0 ; i < scintVectorRpc.size() ; i++){
+     std::cout<<"Strip Name : "<< scintVectorRpc[i]->GetName() <<std::endl;
+   }
+
+   std::cout<<"--------- Printing Second Rpc -----------"<<std::endl;
+   scintVectorRpc = rpc2.GetScintillatorPlane();
+   for(int i = 0 ; i < scintVectorRpc.size() ; i++){
+        std::cout<<"Strip Name : "<< scintVectorRpc[i]->GetName() <<std::endl;
+      }
+
+
+ //Statistics s;
  //s.GenerateTimingHistogram();
 
 
