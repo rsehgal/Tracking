@@ -1,48 +1,46 @@
 /*
- * Hodoscope.cpp
+ * Scintillator.cpp
  *
- *  Created on: Mar 9, 2016
+ *  Created on: Mar 24, 2016
  *      Author: rsehgal
  */
+
 #include "Hodoscope.h"
+#include "sstream"
+#include "string"
+
+/*
+* There should a Hodoscope configuration file, 
+* we will call it TDML (Tomography Description Markup Language),
+* which is basically a XML file, describing the full HodoScope
+* setup.
+* like 1) Number of Scintillator
+*      2) Number of Rpc
+*      3) Module at which Scintillator is connected
+*      4) Module at which Rpc is connected
+*      5) Channel information associated Scintillator and Rpc
+*/
+
 namespace Tracking{
+Hodoscope::Hodoscope():fNumOfScintillatorPlane(0), fNumOfRpc(0){}
+Hodoscope::Hodoscope(int numOfScintillatorPlane, int numOfRpc):
+    fNumOfScintillatorPlane(numOfScintillatorPlane),
+    fNumOfRpc(numOfRpc){
+        std::stringstream ss;
 
-void Hodoscope::AddChamber(std::string chamber_tn,std::string chamber_tw,std::string chamber_b,
-						   Precision curr1, Precision curr2, Precision curr3,
-						   Precision vset1, Precision vset2, Precision vset3,
-						   Precision vmon1, Precision vmon2, Precision vmon3,
-						   int station,
-						   Precision feb1, Precision feb2, Precision feb3, Precision feb4,
-						   Precision feb5, Precision feb6, Precision feb7, Precision feb8,
-						   Precision feb9, Precision feb10, Precision feb11, Precision feb12){
+        //Inserting ScintillatorPlanes in the Hodoscope
+        for(int i = 0 ; i < fNumOfScintillatorPlane ; i++){
+            ss << "Plane_" << i ; 
+            fScintPlaneVector.push_back(new ScintillatorPlane(2, 8, ss.str() ));
+        }
 
-	RPC newRpc;
-	newRpc.SetGap(0,chamber_tn,curr1,vset1,vmon1,station);
-	newRpc.SetGap(1,chamber_tw,curr2,vset2,vmon2,station);
-	newRpc.SetGap(2,chamber_b,curr3,vset3,vmon3,station);
-	newRpc.SetFeb(0,feb1,feb2,feb3,feb4);
-	newRpc.SetFeb(1,feb5,feb6,feb7,feb8);
-	newRpc.SetFeb(2,feb9,feb10,feb11,feb12);
+        //Inserting RPCs in the Hodoscope
+        for(int i = 0 ; i < fNumOfRpc ; i++){
+            ss << "RPC_" << i;
+            fRpcVector.push_back(new RPC(i+2, 96, ss.str() ));
+        }
+    }
 
-	rpc.push_back(&newRpc);
-}
-
-void Hodoscope::AddChamber(std::string chamber_tn,std::string chamber_tw,std::string chamber_b,
-						   Precision curr1, Precision curr2, Precision curr3,
-						   Precision vset1, Precision vset2, Precision vset3,
-						   Precision vmon1, Precision vmon2, Precision vmon3,
-						   int station){
-
-	RPC newRpc;
-	newRpc.SetGap(0,chamber_tn,curr1,vset1,vmon1,station);
-	newRpc.SetGap(1,chamber_tw,curr2,vset2,vmon2,station);
-	newRpc.SetGap(2,chamber_b,curr3,vset3,vmon3,station);
-
-
-	rpc.push_back(&newRpc);
-}
+Hodoscope::~Hodoscope(){}
 
 }//end of Tracking namespace
-
-
-

@@ -11,7 +11,7 @@
 #include "Gap.h"
 #include "FEB.h"
 #include "RPC.h"
-#include "Hodoscope.h"
+//#include "Hodoscope.h"
 #include "OfflineAnalysis.h"
 #include "Statistics.h"
 
@@ -57,11 +57,11 @@ int main(){
   RPC rpc;
   rpc.Print();
 
-  std::cout<<"---- Testing Hodoscope ----"<<std::endl;
-  Hodoscope hodo;
-  hodo.Print();
-  Hodoscope hodo2(10);
-  hodo2.Print();
+  // std::cout<<"---- Testing Hodoscope ----"<<std::endl;
+  // Hodoscope hodo;
+  // hodo.Print();
+  // Hodoscope hodo2(10);
+  // hodo2.Print();
 
   std::cout<<std::endl;
   std::cout<<"---- starting stuff of reading different file ----"<<std::endl;
