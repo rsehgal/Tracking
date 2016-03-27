@@ -54,8 +54,16 @@ void RPC::SetFeb(int i, Precision th1,Precision th2, Precision th3, Precision th
 	feb[i].Set(th1,th2,th3,th4);
 }
 
-void RPC::CalculateEfficiency(){
-    
+Precision RPC::CalculateEfficiency(Tree &t){
+    //return (fEventCount/Tree::GetNumOfEvents())*100.;
+    return (fEventCount/t.GetNumOfEvents())*100.;
+}
+
+bool RPC::EventDetected(Tree &t, int evNo){
+    bool detected = rpc->IsShowerEvent<true>(t,evNo);
+    if(detected) 
+        fEventCount++;
+    return detected; 
 }
 
 }// end of Tracking namespace

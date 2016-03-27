@@ -1,4 +1,6 @@
 
+#ifndef TREEEXERCISE_TREE_H_
+#define TREEEXERCISE_TREE_H_
 #include <TTree.h>
 #include <vector>
 #include <algorithm>
@@ -11,6 +13,7 @@ using namespace Tracking;
 class Tree{
 	
 	private:
+		//static
 		int numOfEvents;
 		//Channel ch;
 		Channel ch;
@@ -25,6 +28,7 @@ class Tree{
 		~Tree();
 		void TreeW();
 		void TreeR();
+		//static 
 		int GetNumOfEvents(){return numOfEvents;}
 		void TreeR_V2(std::string bName, int entry);
 		Channel* GetEntry(std::string bName, int evNo);
@@ -35,3 +39,4 @@ class Tree{
 
 
 };
+#endif /* TREEEXERCISE_TREE_H_ */

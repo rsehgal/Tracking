@@ -18,6 +18,7 @@
 
 #include "Scintillator.h"
 #include "base/Global.h"
+#include "Tree.h"
 
 //Considering each RPC strip equivalent to Scintillator
 #define Rpc ScintillatorPlane
@@ -38,6 +39,7 @@ private:
 	Rpc *rpc;//(2,96,"First-RPC");
 
     Precision fEfficiency;
+    int fEventCount;
 
 	Statistics stat;
 
@@ -129,8 +131,15 @@ public:
 	  rpc->PrintStrips();
 	}
 
-	void CalculateEfficiency();
-	Precision GetEfficiency(){return fEfficiency;}
+	bool EventDetected(Tree &t, int evNo);
+	Precision CalculateEfficiency(Tree &t);
+	Precision GetEfficiency(Tree &t){
+		//return CalculateEfficiency();
+	    return (Precision(fEventCount)/t.GetNumOfEvents())*100.;
+
+	}
+
+	int GetEventCount(){return fEventCount;}
 
 };//end of RPC class
 

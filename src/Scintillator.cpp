@@ -129,6 +129,38 @@ void Scintillator::DetectAndSetHit(int evNo){
   //std::cout<<"fScintHit : "<< fScintHit <<std::endl;
 }
 
+// template<bool ForRpc>
+// void Scintillator::DetectAndSetHit(Tree &t, int evNo){
+// /*
+// *  For the time being hard coding the information related to
+// *  trigger module and channel.
+// *  triggerModule : 0 , triggerChannel : 31
+// *
+// *  ModuleVector variable "modVector" should be filled after reading the ROOT file
+// *
+// */
+//   fScintHit = false;
+//   ModuleVector modVector; // This should come prefilled from somewhere else. Here included just
+//                           // to make compiler happy, should be remove later on
+//   //Tree t("6133.root","BSC_DATA_TREE");
+//   Channel *trigMultiHit = t.GetEntry("Module2_LE_CH31",evNo);
+//   long trig = trigMultiHit->at(0);
+//   ch = t.GetEntry(fBName,evNo);
+//   if(ch->size()){
+//   long scintillator = ch->at(0);
+//   if(  scintillator > 0){
+//     if(ForRpc){
+//       long rpcData = scintillator;
+//       if( rpcData >= 19550 && rpcData <= 20550) fScintHit = true;
+//     }else{
+//       if(abs(trig - scintillator) < scintMax) fScintHit=true;
+//     }
+//   }
+//   }
+
+//   //std::cout<<"fScintHit : "<< fScintHit <<std::endl;
+// }
+
 
 /*************************************************
  ***** Definition of ScintillatorPlane class *****
@@ -147,6 +179,19 @@ bool ScintillatorPlane::IsShowerEvent(int evNo){
   return (fScintTotal >= scint_multiplicity_max);
 }
 
+/*template<bool ForRpc>
+bool ScintillatorPlane::IsShowerEvent(Tree &t, int evNo){
+  fScintTotal = 0;
+
+  //std::cout<<"ScintTotal Before : "<<fScintTotal<<std::endl;
+  int scintPlaneSize = fScintillatorPlane.size();
+  for(int i = 0 ; i < scintPlaneSize ; i++){
+    fScintillatorPlane[i]->DetectAndSetHit<ForRpc>(t,evNo);
+  }
+  DetectTotalScintFired();
+  //std::cout<<"ScintTotal : "<<fScintTotal<<std::endl;
+  return (fScintTotal >= scint_multiplicity_max);
+}*/
 
 void ScintillatorPlane::CreateHistogram(){
   int scintPlaneSize = fScintillatorPlane.size();

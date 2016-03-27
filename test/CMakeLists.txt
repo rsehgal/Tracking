@@ -5,6 +5,10 @@ ${CMAKE_SOURCE_DIR}/test/TreeTest.cpp
 ${CMAKE_SOURCE_DIR}/test/StatTest.cpp
 ${CMAKE_SOURCE_DIR}/test/RpcTest.cpp
 ${CMAKE_SOURCE_DIR}/test/HodoscopeTest.cpp
+${CMAKE_SOURCE_DIR}/test/ShowerDetectionTest.cpp
+${CMAKE_SOURCE_DIR}/test/EfficiencyTest.cpp
+
+
 
 )
 

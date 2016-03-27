@@ -46,9 +46,10 @@ void GenerateTimingHistogram(){
     for (int i = 0; i < scintPlane.size(); i++) {
       ch = t.GetEntry(scintPlane[i]->GetName(), evNo);
       if (ch->size()) {
-        for (int j = 0; j < ch->size(); j++) {
-          h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
-        }
+        //h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
+        // for (int j = 0; j < ch->size(); j++) {
+        //   // h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
+        // }
       }
     }
   }
@@ -58,9 +59,10 @@ void GenerateTimingHistogram(){
     for (int i = 0; i < scintPlane.size(); i++) {
       ch = t.GetEntry(scintPlane[i]->GetName(), evNo);
       if (ch->size()) {
-        for (int j = 0; j < ch->size(); j++) {
-          h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
-        }
+        //h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
+        // for (int j = 0; j < ch->size(); j++) {
+        //   // h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
+        // }
       }
     }
 
@@ -75,9 +77,10 @@ void GenerateTimingHistogram(){
         ch = t.GetEntry(scintPlane[i]->GetName(), evNo);
         if (ch->size()) {
           //std::cout<<"-- Data Found --"<<std::endl;
-          for (int j = 0; j < ch->size(); j++) {
-            h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
-          }
+          //h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
+          // for (int j = 0; j < ch->size(); j++) {
+          //   //h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
+          // }
         }
       }
 
