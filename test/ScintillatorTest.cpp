@@ -58,24 +58,24 @@ std::cout<<"----- Print Bottom Scintillator Names ------"<<std::endl;
    Scintillator::SetStartingId(31);
    ScintillatorPlane rpc2(3,96,"First-RPC");
    //Printing the name of each strip to verify the creation of 96 strips of RPCs
-   std::vector<Scintillator*> scintVectorRpc = rpc1.GetScintillatorPlane();
+/*   std::vector<Scintillator*> scintVectorRpc = rpc1.GetScintillatorPlane();
    for(int i = 0 ; i < scintVectorRpc.size() ; i++){
      std::cout<<"Strip Name : "<< scintVectorRpc[i]->GetName() <<std::endl;
    }
-
-   std::cout<<"--------- Printing Second Rpc -----------"<<std::endl;
+*/
+ /*  std::cout<<"--------- Printing Second Rpc -----------"<<std::endl;
    scintVectorRpc = rpc2.GetScintillatorPlane();
    for(int i = 0 ; i < scintVectorRpc.size() ; i++){
         std::cout<<"Strip Name : "<< scintVectorRpc[i]->GetName() <<std::endl;
       }
-
+*/
 
  //Statistics s;
  //s.GenerateTimingHistogram();
 
 
-/*
-  int numEvents = 0;
+
+  int numEvents = 100;
   for(int i = 0 ; i< numEvents ; i++){
     //std::cout<<"==============================================="<<std::endl;
     if(topPlane.IsShowerEvent(i)){
@@ -83,7 +83,7 @@ std::cout<<"----- Print Bottom Scintillator Names ------"<<std::endl;
              <<topPlane.GetShowerCount()<<std::endl;
     }
   }
-*/
+
 
 /*  std::cout<<"+++++++++++++++++++++++++++++++++++++++++"<<std::endl;
   TApplication *fApp = new TApplication("VecGeom Visualizer", NULL, NULL);

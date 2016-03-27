@@ -32,6 +32,7 @@
 #include"base/Global.h"
 #include "Tree.h"
 #include <TH1F.h>
+#include <iostream>
 
 namespace Tracking{
 
@@ -142,6 +143,13 @@ public:
 
   // This function returns that how many scintillators were fired in an event.
   int GetShowerCount(){return fScintTotal;}
+
+  void PrintStrips(){
+    std::cout<<"-----------------------------------------------------"<<std::endl;
+         for(int i = 0 ; i < fScintillatorPlane.size() ; i++){
+           std::cout<<" Name : "<< fScintillatorPlane[i]->GetName() <<std::endl;
+         }
+  }
 
 
 

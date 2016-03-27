@@ -17,6 +17,7 @@
 #include "Statistics.h"
 
 #include "Scintillator.h"
+#include "base/Global.h"
 
 //Considering each RPC strip equivalent to Scintillator
 #define Rpc ScintillatorPlane
@@ -35,6 +36,8 @@ private:
 	int fModuleId;
 	//std::vector<RpcStrip> fReadOut;
 	Rpc *rpc;//(2,96,"First-RPC");
+
+    Precision fEfficiency;
 
 	Statistics stat;
 
@@ -122,14 +125,12 @@ public:
 
 	}
 
-	void PrintStripNames(){
-
-	  std::vector<RpcStrip*> stripVectorRpc = rpc->GetScintillatorPlane();
-	  std::cout<<"-----------------------------------------------------"<<std::endl;
-	       for(int i = 0 ; i < stripVectorRpc.size() ; i++){
-	         std::cout<<"Strip Name : "<< stripVectorRpc[i]->GetName() <<std::endl;
-	       }
+	void PrintStrips(){
+	  rpc->PrintStrips();
 	}
+
+	void CalculateEfficiency();
+	Precision GetEfficiency(){return fEfficiency;}
 
 };//end of RPC class
 

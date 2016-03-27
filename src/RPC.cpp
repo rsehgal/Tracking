@@ -54,5 +54,9 @@ void RPC::SetFeb(int i, Precision th1,Precision th2, Precision th3, Precision th
 	feb[i].Set(th1,th2,th3,th4);
 }
 
+void RPC::CalculateEfficiency(){
+    
+}
+
 }// end of Tracking namespace
 

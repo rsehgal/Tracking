@@ -26,20 +26,27 @@ Hodoscope::Hodoscope():fNumOfScintillatorPlane(0), fNumOfRpc(0){}
 Hodoscope::Hodoscope(int numOfScintillatorPlane, int numOfRpc):
     fNumOfScintillatorPlane(numOfScintillatorPlane),
     fNumOfRpc(numOfRpc){
-        std::stringstream ss;
+        //std::stringstream ss;
 
         //Inserting ScintillatorPlanes in the Hodoscope
         for(int i = 0 ; i < fNumOfScintillatorPlane ; i++){
+            std::stringstream ss;
             ss << "Plane_" << i ; 
             fScintPlaneVector.push_back(new ScintillatorPlane(2, 8, ss.str() ));
         }
 
         //Inserting RPCs in the Hodoscope
         for(int i = 0 ; i < fNumOfRpc ; i++){
+            std::stringstream ss;
             ss << "RPC_" << i;
             fRpcVector.push_back(new RPC(i+2, 96, ss.str() ));
         }
     }
+
+Hodoscope::Hodoscope(std::string hodoName, int numOfScintillatorPlane, int numOfRpc):
+Hodoscope(numOfScintillatorPlane,numOfRpc){
+    fName = hodoName;
+}
 
 Hodoscope::~Hodoscope(){}
 

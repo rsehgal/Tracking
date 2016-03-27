@@ -4,6 +4,8 @@ ${CMAKE_SOURCE_DIR}/test/ScintillatorTest.cpp
 ${CMAKE_SOURCE_DIR}/test/TreeTest.cpp
 ${CMAKE_SOURCE_DIR}/test/StatTest.cpp
 ${CMAKE_SOURCE_DIR}/test/RpcTest.cpp
+${CMAKE_SOURCE_DIR}/test/HodoscopeTest.cpp
+
 )
 
 macro(build_executables EXECUTABLES)

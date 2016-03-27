@@ -7,9 +7,9 @@ void GenerateTimingHistogram();
 int main(){
 
   RPC rpc(2,96,"FirstRpc");
-  rpc.PrintStripNames();
+  rpc.PrintStrips();
   RPC rpc2(3,64,"FirstRpc");
-  rpc2.PrintStripNames();
+  rpc2.PrintStrips();
 
   GenerateTimingHistogram();
 
