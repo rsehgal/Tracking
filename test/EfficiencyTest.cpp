@@ -23,6 +23,7 @@ typedef std::vector<RPC*> rpcVector;
   scintPlaneVector sPV = h.GetScintPlaneVector();
   rpcVector rV = h.GetRpcVector();
   int numOfEvents = t.GetNumOfEvents();
+  int numOfGenuineEvents = 0 ;
   for(int evNo = 0 ; evNo < numOfEvents ; evNo++){
   //for(int evNo = 0 ; evNo < 10 ; evNo++){
 
@@ -30,9 +31,12 @@ typedef std::vector<RPC*> rpcVector;
     for(int j = 0 ; j < sPV.size() ; j++){
         isShowerEvent |= sPV[j]->IsShowerEvent<false>(t,evNo);
     }
-    if(isShowerEvent)
+    if(isShowerEvent){
+        //rejecting shower events
         continue;
+    }
     else{
+        numOfGenuineEvents++;
         //Do the stuff for calculation of Efficiency
         //std::cout<<"Processing Genuine Events....."<<std::endl;
         for(int j = 0 ; j < rV.size() ; j++){
@@ -45,8 +49,9 @@ typedef std::vector<RPC*> rpcVector;
   }
 
   for(int j = 0 ; j < rV.size() ; j++){
-    std::cout<<"Total Event count for detector : "<< j+1 <<" : "<< rV[j]->GetEventCount()
-             << " :: Efficiency : "<< rV[j]->GetEfficiency(t) << std::endl;
+    std::cout<<"Total Event count for detector : "<< j+1 <<" : "<< rV[j]->GetEventCount() << std::endl
+             <<"Total Num of Genuine Events : "<< numOfGenuineEvents << std::endl
+             << "Efficiency : "<< rV[j]->GetEfficiency(numOfGenuineEvents) << " %" <<std::endl;
   }
 
  }

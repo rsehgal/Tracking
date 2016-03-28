@@ -133,9 +133,9 @@ public:
 
 	bool EventDetected(Tree &t, int evNo);
 	Precision CalculateEfficiency(Tree &t);
-	Precision GetEfficiency(Tree &t){
+	Precision GetEfficiency(int numOfEvents){
 		//return CalculateEfficiency();
-	    return (Precision(fEventCount)/t.GetNumOfEvents())*100.;
+	    return (Precision(fEventCount)/numOfEvents)*100.;
 
 	}
 
