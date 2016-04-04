@@ -6,10 +6,12 @@ void GenerateTimingHistogram();
 
 int main(){
 
+/*
   RPC rpc(2,96,"FirstRpc");
   rpc.PrintStrips();
   RPC rpc2(3,64,"FirstRpc");
   rpc2.PrintStrips();
+*/
 
   GenerateTimingHistogram();
 
@@ -20,7 +22,7 @@ void GenerateTimingHistogram(){
   ScintillatorPlane topPlane(2,8,"Top-Plane");
   ScintillatorPlane bottomPlane(2,8,"Bottom-Plane");
   int nxbins = 1000;
-  int xlow = 19500;
+  int xlow = 19000;
   int xhigh = 21000;
   int nybins = 150;
   int ylow = -10;
@@ -31,7 +33,7 @@ void GenerateTimingHistogram(){
   TCanvas *c2 = new TCanvas("c2", "Timing-Info", 200, 10, 700, 500);
   c2->Divide(1, 1);
   c2->cd(1);
-  Tree t("6147.root", "BSC_DATA_TREE");
+  Tree t("6675.root", "BSC_DATA_TREE");
   int numOfEvents = t.GetNumOfEvents();
 
   // TH1F *hTrig = new TH1F("hTrig","TEST",100,20000,21000);
@@ -69,7 +71,7 @@ void GenerateTimingHistogram(){
 
   scintPlane.clear();
   //Now Creating Real RPC
-  RPC rpc(3,96,"FirstRpc");
+  RPC rpc(2,6,"FirstRpc");
   scintPlane = rpc.GetRpc()->GetScintillatorPlane();
   for (int evNo = 0; evNo < numOfEvents; evNo++) {
       for (int i = 0; i < scintPlane.size(); i++) {

@@ -150,6 +150,8 @@ public:
   // This function returns that how many scintillators were fired in an event.
   int GetShowerCount(){return fScintTotal;}
 
+  void GetHitMap();
+
   void PrintStrips(){
     std::cout<<"-----------------------------------------------------"<<std::endl;
          for(int i = 0 ; i < fScintillatorPlane.size() ; i++){
@@ -176,17 +178,22 @@ void Scintillator::DetectAndSetHit(Tree &t, int evNo){
                           // to make compiler happy, should be remove later on
   //Tree t("6133.root","BSC_DATA_TREE");
   Channel *trigMultiHit = t.GetEntry("Module2_LE_CH31",evNo);
-  long trig = trigMultiHit->at(0);
+  long trig = 0;
+  trig = trigMultiHit->at(0);
+  ch = 0;
   ch = t.GetEntry(fBName,evNo);
   if(ch->size()){
-  long scintillator = ch->at(0);
+  long scintillator = 0;
+  scintillator = ch->at(0);
+  //std::cout<<"Name : "<<fBName << "  :: Value : "<<scintillator<< "  :: Trig Value : "<< trig << std::endl;
 
   if(  scintillator > 0){
     if(ForRpc){
       //std::cout<<"BranchName : "<<fBName<<std::endl;
       long rpcData = scintillator;
       //std::cout<< "Rpc Data : "<<rpcData<<std::endl;
-      if( rpcData >= 19550 && rpcData <= 20550) fScintHit = true;
+      if( rpcData >= 19444 && rpcData <= 20550) fScintHit = true;
+      //if( rpcData >= 19550 && rpcData <= 19875) fScintHit = true;
     }else{
       if(abs(trig - scintillator) < scintMax) fScintHit=true;
     }

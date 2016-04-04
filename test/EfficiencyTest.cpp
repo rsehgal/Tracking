@@ -24,6 +24,7 @@ typedef std::vector<RPC*> rpcVector;
   rpcVector rV = h.GetRpcVector();
   int numOfEvents = t.GetNumOfEvents();
   int numOfGenuineEvents = 0 ;
+  //numOfEvents = 100;
   for(int evNo = 0 ; evNo < numOfEvents ; evNo++){
   //for(int evNo = 0 ; evNo < 10 ; evNo++){
 
@@ -40,7 +41,9 @@ typedef std::vector<RPC*> rpcVector;
         //Do the stuff for calculation of Efficiency
         //std::cout<<"Processing Genuine Events....."<<std::endl;
         for(int j = 0 ; j < rV.size() ; j++){
+        //for(int j = 1 ; j < 2 ; j++){
             rV[j]->EventDetected(t,evNo);
+            //rV[j]->GetHitMap();
 
         }
     }

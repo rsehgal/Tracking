@@ -40,6 +40,7 @@ Hodoscope::Hodoscope(int numOfScintillatorPlane, int numOfRpc):
             std::stringstream ss;
             ss << "RPC_" << i;
             fRpcVector.push_back(new RPC(i+2, 96, ss.str() ));
+            //fRpcVector.push_back(new RPC(2, 6, ss.str(),23));
         }
     }
 

@@ -15,13 +15,13 @@ RPC::RPC(std::string gapName, Precision curr, Precision vset, Precision vmon, in
 
 }
 
-RPC::RPC(int moduleId, int numOfChannels, std::string rpcName):
+RPC::RPC(int moduleId, int numOfChannels, std::string rpcName,int startId):
   fModuleId(moduleId),
   fNumOfChannels(numOfChannels),
   fName(rpcName),
   fEventCount(0){
 
-  Scintillator::SetStartingId(31);
+  Scintillator::SetStartingId(startId);
   //rpc->resize(fNumOfChannels);
   //rpc = new ScintillatorPlane(fModuleId,fNumOfChannels,fName);
   rpc = new Rpc(fModuleId,fNumOfChannels,fName);

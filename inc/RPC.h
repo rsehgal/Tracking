@@ -59,7 +59,7 @@ public:
 		gap.push_back(new Gap());
 	}
 	RPC(std::string, Precision, Precision, Precision, int);
-	RPC(int moduleId, int numOfChannels, std::string rpcName);
+	RPC(int moduleId, int numOfChannels, std::string rpcName, int startId = 31);
 	~RPC(){}
 
 	void SetStatictics(){stat.SetStatistics(fName,map_station,fEtaPartition,fTriggerLayer);}
@@ -140,6 +140,7 @@ public:
 	}
 
 	int GetEventCount(){return fEventCount;}
+	void GetHitMap(){rpc->GetHitMap();}
 
 };//end of RPC class
 

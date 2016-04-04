@@ -166,6 +166,21 @@ void Scintillator::DetectAndSetHit(int evNo){
  ***** Definition of ScintillatorPlane class *****
  *************************************************/
 
+void ScintillatorPlane::GetHitMap(){
+  bool verbose=true;
+  int scintPlaneSize = fScintillatorPlane.size();
+  for(int i = 0 ; i < scintPlaneSize ; i++){
+    if(verbose){
+      if(!(i%32)) std::cout<<"    ";
+      if(fScintillatorPlane[i]->GetScintHit())
+        std::cout<<"1 ";
+      else
+        std::cout<<"0 ";
+    }
+  }
+  std::cout<<std::endl;
+}
+
 bool ScintillatorPlane::IsShowerEvent(int evNo){
   fScintTotal = 0;
 
