@@ -10,14 +10,16 @@
 
 namespace Tracking{
 
-RPC::RPC(std::string gapName, Precision curr, Precision vset, Precision vmon, int stat){
+RPC::RPC(std::string gapName, Precision curr, Precision vset, Precision vmon, int stat):
+    fEventCount(0){
 
 }
 
 RPC::RPC(int moduleId, int numOfChannels, std::string rpcName):
   fModuleId(moduleId),
   fNumOfChannels(numOfChannels),
-  fName(rpcName){
+  fName(rpcName),
+  fEventCount(0){
 
   Scintillator::SetStartingId(31);
   //rpc->resize(fNumOfChannels);

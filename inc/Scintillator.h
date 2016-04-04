@@ -172,7 +172,7 @@ void Scintillator::DetectAndSetHit(Tree &t, int evNo){
 *
 */
   fScintHit = false;
-  ModuleVector modVector; // This should come prefilled from somewhere else. Here included just
+  //ModuleVector modVector; // This should come prefilled from somewhere else. Here included just
                           // to make compiler happy, should be remove later on
   //Tree t("6133.root","BSC_DATA_TREE");
   Channel *trigMultiHit = t.GetEntry("Module2_LE_CH31",evNo);
@@ -207,6 +207,7 @@ bool ScintillatorPlane::IsShowerEvent(Tree &t, int evNo){
   }
   DetectTotalScintFired();
   if(ForRpc){
+    //For one event fScintTotal for detector can never be > 1 (in principle)
     return (fScintTotal > 0);
   }else{
   //std::cout<<"ScintTotal : "<<fScintTotal<<std::endl;

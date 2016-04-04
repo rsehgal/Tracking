@@ -38,7 +38,6 @@ void GenerateTimingHistogram(){
   TH2F *h2d = new TH2F("h2d", "Timing", nxbins, xlow, xhigh, nybins, ylow, yhigh);
   std::vector<Scintillator*> scintPlane = topPlane.GetScintillatorPlane();
 
-
   for (int evNo = 0; evNo < numOfEvents; evNo++) {
     trig = t.GetEntry("Module2_LE_CH31", evNo);
     h2d->Fill(trig->at(0), 31);
@@ -46,7 +45,7 @@ void GenerateTimingHistogram(){
     for (int i = 0; i < scintPlane.size(); i++) {
       ch = t.GetEntry(scintPlane[i]->GetName(), evNo);
       if (ch->size()) {
-        //h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
+        h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
         // for (int j = 0; j < ch->size(); j++) {
         //   // h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
         // }
@@ -59,7 +58,7 @@ void GenerateTimingHistogram(){
     for (int i = 0; i < scintPlane.size(); i++) {
       ch = t.GetEntry(scintPlane[i]->GetName(), evNo);
       if (ch->size()) {
-        //h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
+        h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
         // for (int j = 0; j < ch->size(); j++) {
         //   // h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
         // }
@@ -68,6 +67,7 @@ void GenerateTimingHistogram(){
 
   }
 
+  scintPlane.clear();
   //Now Creating Real RPC
   RPC rpc(3,96,"FirstRpc");
   scintPlane = rpc.GetRpc()->GetScintillatorPlane();
@@ -77,14 +77,14 @@ void GenerateTimingHistogram(){
         ch = t.GetEntry(scintPlane[i]->GetName(), evNo);
         if (ch->size()) {
           //std::cout<<"-- Data Found --"<<std::endl;
-          //h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
-          // for (int j = 0; j < ch->size(); j++) {
-          //   //h2d->Fill(ch->at(j), scintPlane[i]->GetChannelId());
-          // }
+          h2d->Fill(ch->at(0), scintPlane[i]->GetChannelId());
+
         }
       }
 
     }
+
+
 
   h2d->Draw();
   h2d->Print();

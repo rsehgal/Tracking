@@ -19,7 +19,7 @@ typedef std::vector<RPC*> rpcVector;
  int main(){
   Tree t("6147.root","BSC_DATA_TREE");
 
-  Hodoscope h("TestHodoScope", 2 , 2);
+  Hodoscope h("TestHodoScope", 2 , 3);
   scintPlaneVector sPV = h.GetScintPlaneVector();
   rpcVector rV = h.GetRpcVector();
   int numOfEvents = t.GetNumOfEvents();
@@ -41,9 +41,7 @@ typedef std::vector<RPC*> rpcVector;
         //std::cout<<"Processing Genuine Events....."<<std::endl;
         for(int j = 0 ; j < rV.size() ; j++){
             rV[j]->EventDetected(t,evNo);
-            // if(rV[j]->GetRpc()->IsShowerEvent<true>(t,evNo))
-            //     std::cout<<"DETECTED BY RPC....."<<std::endl;
-            // rV[j]->PrintStrips();
+
         }
     }
   }
