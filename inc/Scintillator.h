@@ -192,7 +192,9 @@ void Scintillator::DetectAndSetHit(Tree &t, int evNo){
       //std::cout<<"BranchName : "<<fBName<<std::endl;
       long rpcData = scintillator;
       //std::cout<< "Rpc Data : "<<rpcData<<std::endl;
-      if( rpcData >= 19444 && rpcData <= 20550) fScintHit = true;
+      if( rpcData >= 19450 && rpcData <= 20550
+          //&& (fScintId < 64)
+          ) fScintHit = true;
       //if( rpcData >= 19550 && rpcData <= 19875) fScintHit = true;
     }else{
       if(abs(trig - scintillator) < scintMax) fScintHit=true;

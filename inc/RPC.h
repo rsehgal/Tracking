@@ -141,6 +141,7 @@ public:
 
 	int GetEventCount(){return fEventCount;}
 	void GetHitMap(){rpc->GetHitMap();}
+	int GetHitCount(){return rpc->GetShowerCount();}
 
 };//end of RPC class
 
