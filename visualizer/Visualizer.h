@@ -29,9 +29,8 @@ class Visualizer {
 private:
   TApplication *fApp;       // ROOT application used for visualization
   TGeoManager *fGeoManager; // ROOT geometry manager
-  std::vector<std::tuple<TGeoVolume, TGeoTranslation> > fVolumes;
-  //std::list<std::unique_ptr<TPolyMarker3D>> fMarkers;
-  //std::list<std::unique_ptr<TPolyLine3D>> fLines;
+  std::vector<std::tuple<TGeoVolume*, TGeoTranslation*> > fVolumes;
+
 
 public:
   Visualizer();
@@ -42,7 +41,7 @@ public:
   void AddPoint();
   void AddLine();
   void AddVolume( TGeoVolume rootVolume);
-  void AddVolume( TGeoVolume rootVolume, Vector3D<Precision>  &p);
+  void AddVolume( TGeoVolume *rootVolume, Vector3D<Precision> p);
 };
 
 } //end of Tracking namespace

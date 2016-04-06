@@ -21,7 +21,7 @@
 #include "Visualizer.h"
 #include "base/Vector3D.h"
 
-#define kInfinity 100
+#define kInfinity 10000
 
 namespace Tracking {
 Visualizer::Visualizer():fGeoManager(0) {
@@ -35,16 +35,17 @@ Visualizer::~Visualizer() {
 }
 
 void Visualizer::Show(){
-  fGeoManager = new TGeoManager("Simple", "Simple Geometry");
-  TGeoVolume *top = fGeoManager->MakeBox("Top", NULL, kInfinity, kInfinity, kInfinity);
-  fGeoManager->SetTopVolume(top);
 
-  //The volumes should be Added by AddVolume function into a container.
-  //Once the container is ready , we should iterate over it and keep on
-  //adding the node to the top Volume
-  TGeoVolume *vol = fGeoManager->MakeSphere("SPHERE", NULL, 30, 40, 0, 180, 0, 360);
-  top->AddNode(vol, 1);
-  fGeoManager->CloseGeometry();
+  std::cout<<"=============================================="<<std::endl;
+  std::cout<<"========= Inside Expected SHOW() ============="<<std::endl;
+  std::cout<<"=============================================="<<std::endl;
+
+  TGeoVolume *top = gGeoManager->MakeBox("Top", NULL, kInfinity, kInfinity, kInfinity);
+  gGeoManager->SetTopVolume(top);
+  for(int i = 0 ; i < fVolumes.size() ; i++){
+  top->AddNode(std::get<0>(fVolumes[i]), 1 , std::get<1>(fVolumes[i]));
+  }
+  gGeoManager->CloseGeometry();
   top->Draw();
   fApp->Run();
 }
@@ -52,10 +53,6 @@ void Visualizer::Show(){
 void Visualizer::Show(TGeoVolume *vol){
   TGeoVolume *top = gGeoManager->MakeBox("Top", NULL, kInfinity, kInfinity, kInfinity);
   gGeoManager->SetTopVolume(top);
-
-  //The volumes should be Added by AddVolume function into a container.
-  //Once the container is ready , we should iterate over it and keep on
-  //adding the node to the top Volume
   //TGeoVolume *vol = fGeoManager->MakeSphere("SPHERE", NULL, 30, 40, 0, 180, 0, 360);
   top->AddNode(vol, 1);
   gGeoManager->CloseGeometry();
@@ -75,13 +72,12 @@ void Visualizer::AddVolume( TGeoVolume rootVolume) {
 */
 }
 
-void Visualizer::AddVolume( TGeoVolume rootVolume, Vector3D<Precision>  &p) {
-  //p is the translation vector in x, y and z.
-  //For the time being considering ONLY translation, NO rotation.
- /* fVolumes.push_back(std::make_tuple(
+void Visualizer::AddVolume( TGeoVolume *rootVolume, Vector3D<Precision> p) {
+
+  fVolumes.push_back(std::make_tuple(
       rootVolume,
       new TGeoTranslation(p.x(), p.y(), p.z())) ) ;
-*/
+
 }
 
 } //end of Tracking namespace
