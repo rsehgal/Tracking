@@ -43,6 +43,7 @@ include_directories(AFTER SYSTEM ${ROOT_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/inc)
 include_directories(${PROJECT_SOURCE_DIR}/TreeExercise)
+include_directories(${PROJECT_SOURCE_DIR}/visualizer)
 
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Stats.cpp)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/inc/*.h ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.h)

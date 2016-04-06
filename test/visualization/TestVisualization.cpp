@@ -6,10 +6,12 @@
 #include <TGeoShape.h>
 #include <TView.h>
 
-#define kInfinity 100
+
+//#define kInfinity 100
+#include "Visualizer.h"
 
 int main(){
-	TApplication *fApp = new TApplication("Tracking Visualizer", NULL, NULL);
+	/*TApplication *fApp = new TApplication("Tracking Visualizer", NULL, NULL);
 	TGeoManager *fGeoManager = new TGeoManager("Simple", "Simple Geometry");
 	TGeoVolume *top = fGeoManager->MakeBox("Top", NULL,kInfinity, kInfinity, kInfinity);
 	fGeoManager->SetTopVolume(top);
@@ -18,6 +20,11 @@ int main(){
 	fGeoManager->CloseGeometry();
 	top->Draw();
 	fApp->Run();
+*/
+
+  Tracking::Visualizer v;
+  v.Show();
+
 
 
 }
