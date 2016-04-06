@@ -14,26 +14,35 @@
 class TApplication;
 class TGeoManager;
 class TGeoMatrix;
+class TGeoTranslation;
 class TGeoShape;
 class TGeoVolume;
 class TPolyLine3D;
+
 #include "TPolyMarker3D.h"
+#include "base/Global.h"
+#include "base/Vector3D.h"
 
 namespace Tracking {
 
 class Visualizer {
 private:
-  TApplication *fApp;      // ROOT application used for visualization
+  TApplication *fApp;       // ROOT application used for visualization
   TGeoManager *fGeoManager; // ROOT geometry manager
-
+  std::vector<std::tuple<TGeoVolume, TGeoTranslation> > fVolumes;
+  //std::list<std::unique_ptr<TPolyMarker3D>> fMarkers;
+  //std::list<std::unique_ptr<TPolyLine3D>> fLines;
 
 public:
   Visualizer();
   virtual ~Visualizer();
   void Show();
+  void Show(TGeoVolume *);
   void AddVolume();
   void AddPoint();
   void AddLine();
+  void AddVolume( TGeoVolume rootVolume);
+  void AddVolume( TGeoVolume rootVolume, Vector3D<Precision>  &p);
 };
 
 } //end of Tracking namespace
