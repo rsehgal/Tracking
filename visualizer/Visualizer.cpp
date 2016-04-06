@@ -36,6 +36,10 @@ void Visualizer::Show(){
   fGeoManager = new TGeoManager("Simple", "Simple Geometry");
   TGeoVolume *top = fGeoManager->MakeBox("Top", NULL, kInfinity, kInfinity, kInfinity);
   fGeoManager->SetTopVolume(top);
+
+  //The volumes should be Added by AddVolume function into a container.
+  //Once the container is ready , we should iterate over it and keep on
+  //adding the node to the top Volume
   TGeoVolume *vol = fGeoManager->MakeSphere("SPHERE", NULL, 30, 40, 0, 180, 0, 360);
   top->AddNode(vol, 1);
   fGeoManager->CloseGeometry();
