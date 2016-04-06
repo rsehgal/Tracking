@@ -31,13 +31,22 @@ int main(){
   //Creation of TGeoVolume over
 
   //adding all the volumes to STL vector of tupple
-  v.AddVolume(sphVol2,Tracking::Vector3D<Precision>(0.,0.,0.));
-  v.AddVolume(sphVol,Tracking::Vector3D<Precision>(100.,0.,0.));
+  //v.AddVolume(sphVol2,Tracking::Vector3D<Precision>(0.,0.,0.));
+  //v.AddVolume(sphVol,Tracking::Vector3D<Precision>(100.,0.,0.));
 
 
   //Adding a Shape without creating TGeoVolume, hence no need to worry about
   //Material and Medium
-  v.AddVolume(new TGeoBBox("BOX", 20., 30., 40.),Tracking::Vector3D<Precision>(0.,100.,0.));
+  TGeoBBox *box = new TGeoBBox("BOX", 1.5, 50., 0.5);
+  for(int i = 0 ; i< 32 ; i++){
+    v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,0.));
+/*
+  v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,-100.));
+  v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,-50.));
+  v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,50.));
+  v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,100.));
+*/
+  }
 
 
   //v.Show(sphVol);
