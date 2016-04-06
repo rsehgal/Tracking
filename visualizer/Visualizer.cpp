@@ -20,13 +20,15 @@
 #include <TGeoVolume.h>
 #include "Visualizer.h"
 #include "base/Vector3D.h"
-
+#include "TPad.h"
 #define kInfinity 10000
 
 namespace Tracking {
 Visualizer::Visualizer():fGeoManager(0) {
   // TODO Auto-generated constructor stub
   fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
+ matVacuum = new TGeoMaterial("Vacuum", 0,0,0);
+ Vacuum = new TGeoMedium("Vacuum",1, matVacuum);
 }
 
 Visualizer::~Visualizer() {
@@ -47,6 +49,7 @@ void Visualizer::Show(){
   }
   gGeoManager->CloseGeometry();
   top->Draw();
+  //TPad::x3d("OPENGL");
   fApp->Run();
 }
 
@@ -61,21 +64,21 @@ void Visualizer::Show(TGeoVolume *vol){
 }
 
 void Visualizer::AddVolume( TGeoVolume rootVolume) {
-  /*fVolumes.push_back(std::make_tuple(
-      volume,
-      std::unique_ptr<TGeoMatrix>(new TGeoIdentity),
-      std::unique_ptr<TGeoVolume>(new TGeoVolume("", volume.get(), nullptr))));
-*//*
-  if (fVerbosity > 0) {
-    std::cout << "Added ROOT volume to Visualizer.\n";
-  }
-*/
+
 }
 
 void Visualizer::AddVolume( TGeoVolume *rootVolume, Vector3D<Precision> p) {
 
   fVolumes.push_back(std::make_tuple(
       rootVolume,
+      new TGeoTranslation(p.x(), p.y(), p.z())) ) ;
+
+}
+
+void Visualizer::AddVolume( TGeoShape *shape, Vector3D<Precision> p) {
+
+  fVolumes.push_back(std::make_tuple(
+      new TGeoVolume("SHAPE", shape, Vacuum),
       new TGeoTranslation(p.x(), p.y(), p.z())) ) ;
 
 }

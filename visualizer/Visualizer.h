@@ -18,6 +18,8 @@ class TGeoTranslation;
 class TGeoShape;
 class TGeoVolume;
 class TPolyLine3D;
+class TGeoMaterial;
+class TGeoMedium;
 
 #include "TPolyMarker3D.h"
 #include "base/Global.h"
@@ -30,6 +32,8 @@ private:
   TApplication *fApp;       // ROOT application used for visualization
   TGeoManager *fGeoManager; // ROOT geometry manager
   std::vector<std::tuple<TGeoVolume*, TGeoTranslation*> > fVolumes;
+  TGeoMaterial *matVacuum; //= new TGeoMaterial("Vacuum", 0,0,0);
+  TGeoMedium *Vacuum;// = new TGeoMedium("Vacuum",1, matVacuum);
 
 
 public:
@@ -42,6 +46,7 @@ public:
   void AddLine();
   void AddVolume( TGeoVolume rootVolume);
   void AddVolume( TGeoVolume *rootVolume, Vector3D<Precision> p);
+  void AddVolume( TGeoShape *shape, Vector3D<Precision> p);
 };
 
 } //end of Tracking namespace
