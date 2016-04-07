@@ -53,7 +53,7 @@ int main(){
 
   //v.Show(sphVol);
   //Show method to display the volumes
-  ScintillatorPlane *sP = new ScintillatorPlane(1,8,"Test");
+  ScintillatorPlane *sP = new ScintillatorPlane(1,32,"Test");
   v.AddVolume(sP->GetPlaneTGeoVolume());
   v.Show();
 

@@ -50,6 +50,7 @@ private:
   int fScintId; //represents it id of channel on a Module
   static int fId;//Static variable to increase whenever a new object is created.
   bool fScintHit;
+  TGeoVolume *fScintTGeoVolume;
 
 
   static int sStripNum;
@@ -118,6 +119,9 @@ public:
 
   }
 
+  void CreateScintillatorTGeoVolume();
+  void Draw();
+  TGeoVolume* GetScintillatorTGeoVolume(){return fScintTGeoVolume;}
 
 
 

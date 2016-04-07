@@ -9,6 +9,8 @@
 #include "TAxis3D.h"
 #include "TGeoManager.h"
 #include "TGeoMatrix.h"
+#include "TGeoMaterial.h"
+#include "TGeoMedium.h"
 //#include "TGeoTranslation.h"
 #include "TGeoShape.h"
 #include "TPolyLine3D.h"
@@ -24,6 +26,10 @@
 #define kInfinity 10000
 
 namespace Tracking {
+
+//TGeoMaterial Visualizer::*matVacuum=NULL;
+//TGeoMedium Visualizer::*Vacuum=NULL;
+
 Visualizer::Visualizer():fGeoManager(0) {
   // TODO Auto-generated constructor stub
   fApp = new TApplication("VecGeom Visualizer", NULL, NULL);

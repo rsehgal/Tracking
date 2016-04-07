@@ -32,7 +32,9 @@ private:
   TApplication *fApp;       // ROOT application used for visualization
   TGeoManager *fGeoManager; // ROOT geometry manager
   std::vector<std::tuple<TGeoVolume*, TGeoTranslation*> > fVolumes;
+  //static
   TGeoMaterial *matVacuum; //= new TGeoMaterial("Vacuum", 0,0,0);
+  //static
   TGeoMedium *Vacuum;// = new TGeoMedium("Vacuum",1, matVacuum);
 
 

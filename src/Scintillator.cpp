@@ -13,6 +13,7 @@
 #include <TFile.h>
 #include <TGeoBBox.h>
 #include "Visualizer.h"
+#include "TGeoMatrix.h"
 ///#include "Tree.h"
 
 namespace Tracking{
@@ -45,6 +46,7 @@ Scintillator::Scintillator(int moduleId):fLength(1.5),fBreadth(50.),fHeight(0.5)
   fBName = ss.str();
   //t = new Tree("6133.root","BSC_DATA_TREE");
   h = new TH1F("h",fBName.c_str(),100,20000,21000);
+  CreateScintillatorTGeoVolume();
 
 }
 
@@ -132,6 +134,14 @@ void Scintillator::DetectAndSetHit(int evNo){
   }
 
   //std::cout<<"fScintHit : "<< fScintHit <<std::endl;
+}
+
+void Scintillator::CreateScintillatorTGeoVolume(){
+  Visualizer v;
+  fLength=100;
+  fBreadth=3;
+  fHeight=1;
+  fScintTGeoVolume = v.CreateTGeoVolume(new TGeoBBox(fBName.c_str(),fLength/2., fBreadth/2., fHeight/2.));
 }
 
 // template<bool ForRpc>
@@ -367,6 +377,10 @@ void ScintillatorPlane::CreatePlaneTGeoVolume(){
   fBreadth=100;
   fHeight=1;
   fPlaneTGeoVolume = v.CreateTGeoVolume(new TGeoBBox(fPlaneName.c_str(),fLength/2., fBreadth/2., fHeight/2.));
+  for(int i=0; i < fScintillatorPlane.size(); i++){
+    fPlaneTGeoVolume->AddNode(fScintillatorPlane[i]->GetScintillatorTGeoVolume(),1,(new TGeoTranslation( 0,-fLength/2. + 3*i + 3, 0.)));
+    std::cout<<"Value : " << (-fLength/2. + 3*i + 3) << std::endl;
+  }
 }
 
 void ScintillatorPlane::Draw(){
