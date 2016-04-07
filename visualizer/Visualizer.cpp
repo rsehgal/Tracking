@@ -63,7 +63,10 @@ void Visualizer::Show(TGeoVolume *vol){
   fApp->Run();
 }
 
-void Visualizer::AddVolume( TGeoVolume rootVolume) {
+void Visualizer::AddVolume( TGeoVolume *rootVolume) {
+  fVolumes.push_back(std::make_tuple(
+        rootVolume,
+        new TGeoTranslation(0., 0., 0.)) ) ;
 
 }
 
@@ -81,6 +84,10 @@ void Visualizer::AddVolume( TGeoShape *shape, Vector3D<Precision> p) {
       new TGeoVolume("SHAPE", shape, Vacuum),
       new TGeoTranslation(p.x(), p.y(), p.z())) ) ;
 
+}
+
+TGeoVolume* Visualizer::CreateTGeoVolume(TGeoShape *shape){
+  return (new TGeoVolume("SHAPE", shape, Vacuum));
 }
 
 } //end of Tracking namespace

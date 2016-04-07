@@ -44,9 +44,10 @@ public:
   void AddVolume();
   void AddPoint();
   void AddLine();
-  void AddVolume( TGeoVolume rootVolume);
+  void AddVolume( TGeoVolume *rootVolume);
   void AddVolume( TGeoVolume *rootVolume, Vector3D<Precision> p);
   void AddVolume( TGeoShape *shape, Vector3D<Precision> p);
+  TGeoVolume* CreateTGeoVolume(TGeoShape *shape);
 };
 
 } //end of Tracking namespace

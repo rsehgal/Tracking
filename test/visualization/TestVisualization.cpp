@@ -8,6 +8,7 @@
 #include <TGeoMaterial.h>
 #include "base/Vector3D.h"
 #include <TGeoBBox.h>
+#include "Scintillator.h"
 
 
 #define kInfinity 100
@@ -39,7 +40,8 @@ int main(){
   //Material and Medium
   TGeoBBox *box = new TGeoBBox("BOX", 1.5, 50., 0.5);
   for(int i = 0 ; i< 32 ; i++){
-    v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,0.));
+    //v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,0.));
+
 /*
   v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,-100.));
   v.AddVolume(box,Tracking::Vector3D<Precision>(3*i,0.,-50.));
@@ -51,6 +53,8 @@ int main(){
 
   //v.Show(sphVol);
   //Show method to display the volumes
+  ScintillatorPlane *sP = new ScintillatorPlane(1,8,"Test");
+  v.AddVolume(sP->GetPlaneTGeoVolume());
   v.Show();
 
 

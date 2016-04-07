@@ -33,6 +33,8 @@
 #include "Tree.h"
 #include <TH1F.h>
 #include <iostream>
+#include "base/Vector3D.h"
+#include "TGeoVolume.h"
 
 namespace Tracking{
 
@@ -48,6 +50,10 @@ private:
   int fScintId; //represents it id of channel on a Module
   static int fId;//Static variable to increase whenever a new object is created.
   bool fScintHit;
+
+
+  static int sStripNum;
+  int fStripNum;
 
   Channel *ch;// Data structure to hold data for the scintillator
   std::string fBName; // branch name in ROOT data Tree
@@ -71,6 +77,11 @@ public:
 
   TRACKING_INLINE
   static void SetStartingId(int sId){fId = sId;}
+
+  TRACKING_INLINE
+  static void SetStartingStripNum(int sId){sStripNum = sId;}
+
+
   TRACKING_INLINE
   void SetModuleId(int moduleId){fModuleId = moduleId;}
   TRACKING_INLINE
@@ -93,6 +104,20 @@ public:
   template<bool ForRpc>
   void DetectAndSetHit(Tree&t, int evNo);
 
+  Vector3D<Precision> GetDimensions(){
+    return Vector3D<Precision>(fLength,fBreadth,fHeight);
+  }
+
+/*
+  TGeoBBox* GetPhysicalStrip(){
+    return new TGeoBBox("rpcStrip",fLength,fBreadth, fHeight);
+  }
+*/
+
+  Vector3D<Precision> GetStripPlacement(){
+
+  }
+
 
 
 
@@ -106,6 +131,13 @@ private:
   std::vector<Scintillator*> fScintillatorPlane;
   std::string fPlaneName;
 
+  //Plane dimensions
+  int fLength;
+  int fBreadth;
+  int fHeight;
+
+  TGeoVolume *fPlaneTGeoVolume;
+
 public:
   ScintillatorPlane();//: fScintTotal(0), fNumOfScintillators(8){}
   ScintillatorPlane(int numOfScintillators, std::string planeName="Test-ScintillatorPlane");
@@ -116,6 +148,14 @@ public:
   void CreatePlaneOfScintillators();
   void CreatePlaneOfScintillators(int moduleId);
   void ReadScintMapFileAndCreatePlane();
+
+  TRACKING_INLINE
+  int GetLength(){return fLength;}
+  TRACKING_INLINE
+  int GetBreadth(){return fBreadth;}
+  TRACKING_INLINE
+  int GetHeight(){return fHeight;}
+
 
   TRACKING_INLINE
   void SetNumOfScintillators(int numOfScintillators){fNumOfScintillators = numOfScintillators;}
@@ -159,6 +199,9 @@ public:
          }
   }
 
+  void CreatePlaneTGeoVolume();
+  void Draw();
+  TGeoVolume* GetPlaneTGeoVolume(){return fPlaneTGeoVolume;}
 
 
 };//end of ScintillatorPlane class

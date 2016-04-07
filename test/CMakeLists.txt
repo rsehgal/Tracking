@@ -20,7 +20,7 @@ macro(build_executables EXECUTABLES)
   foreach(EXECUTABLE ${EXECUTABLES})
     get_filename_component(TARGET_NAME ${EXECUTABLE} NAME_WE)
     add_executable(${TARGET_NAME} ${EXECUTABLE} ${sources} ${headers})
-    target_link_libraries(${TARGET_NAME} ${ROOT_LIBRARIES})
+    target_link_libraries(${TARGET_NAME} ${ROOT_LIBRARIES} Geom)
   endforeach()
 endmacro()                        
 
@@ -34,5 +34,6 @@ macro(build_visualization_executables EXECUTABLES)
 endmacro() 
 
 build_executables("${TEST_EXECUTABLES}")
-build_visualization_executables("${TEST_VISUALIZATION_EXECUTABLES}")
+build_executables("${TEST_VISUALIZATION_EXECUTABLES}")
+#build_visualization_executables("${TEST_VISUALIZATION_EXECUTABLES}")
 

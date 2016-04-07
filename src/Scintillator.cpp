@@ -11,6 +11,8 @@
 #include <TH2F.h>
 #include <TApplication.h>
 #include <TFile.h>
+#include <TGeoBBox.h>
+#include "Visualizer.h"
 ///#include "Tree.h"
 
 namespace Tracking{
@@ -20,6 +22,7 @@ namespace Tracking{
  *************************************************/
 
 int Scintillator::fId=-1;
+int Scintillator::sStripNum=-1;
 
 Scintillator::Scintillator():fLength(0),fBreadth(0),fHeight(0), fScintHit(false) ,fModuleId(0) {
   fId++;
@@ -31,10 +34,12 @@ Scintillator::Scintillator():fLength(0),fBreadth(0),fHeight(0), fScintHit(false)
   h = new TH1F("h",fBName.c_str(),100,20000,21000);
 
 }
-
-Scintillator::Scintillator(int moduleId):fLength(0),fBreadth(0),fHeight(0), fScintHit(false) ,fModuleId(moduleId) {
+//Setting default value corresponding the dimension of strip of RPC
+Scintillator::Scintillator(int moduleId):fLength(1.5),fBreadth(50.),fHeight(0.5), fScintHit(false) ,fModuleId(moduleId) {
   fId++;
   fScintId = fId;
+  sStripNum++;
+  fStripNum = sStripNum;
   std::stringstream ss;
   ss << "Module" << fModuleId <<"_LE_CH" << fScintId;
   fBName = ss.str();
@@ -329,9 +334,11 @@ void ScintillatorPlane::CreatePlaneOfScintillators(){
 }
 
 void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId){
+  Scintillator::SetStartingStripNum(-1);
   for(int i = 0 ; i< fNumOfScintillators ; i++){
     fScintillatorPlane.push_back(new Scintillator(moduleId));
   }
+  CreatePlaneTGeoVolume();
 }
 
 void ScintillatorPlane::Print(){
@@ -352,6 +359,18 @@ void ScintillatorPlane::DetectTotalScintFired(){
 
 void ScintillatorPlane::InitializeScintillatorPlane(){
   fScintTotal = 0;
+}
+
+void ScintillatorPlane::CreatePlaneTGeoVolume(){
+  Visualizer v;
+  fLength=100;
+  fBreadth=100;
+  fHeight=1;
+  fPlaneTGeoVolume = v.CreateTGeoVolume(new TGeoBBox(fPlaneName.c_str(),fLength/2., fBreadth/2., fHeight/2.));
+}
+
+void ScintillatorPlane::Draw(){
+
 }
 
 }//end of Tracking namespace
