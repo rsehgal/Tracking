@@ -34,6 +34,7 @@ Visualizer::Visualizer():fGeoManager(0) {
   // TODO Auto-generated constructor stub
   fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
  matVacuum = new TGeoMaterial("Vacuum", 0,0,0);
+ matVacuum->SetTransparency(50);
  Vacuum = new TGeoMedium("Vacuum",1, matVacuum);
 }
 
@@ -53,8 +54,9 @@ void Visualizer::Show(){
   for(int i = 0 ; i < fVolumes.size() ; i++){
   top->AddNode(std::get<0>(fVolumes[i]), 1 , std::get<1>(fVolumes[i]));
   }
+  top->SetLineColor(kRed);
   gGeoManager->CloseGeometry();
-  top->Draw();
+  top->Draw("ogl");
   //TPad::x3d("OPENGL");
   fApp->Run();
 }
