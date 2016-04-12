@@ -259,17 +259,18 @@ bool ScintillatorPlane::IsShowerEvent(Tree &t, int evNo){
   //std::cout<<"ScintTotal Before : "<<fScintTotal<<std::endl;
   int scintPlaneSize = fScintillatorPlane.size();
   for(int i = 0 ; i < scintPlaneSize ; i++){
-    fScintillatorPlane[i]->DetectAndSetHit<ForRpc>(t,evNo);
+    fScintillatorPlane[i]->DetectAndSetHit<ForRpc>(t,evNo);  
   }
-  DetectTotalScintFired();
+  DetectTotalScintFired();  
   if(ForRpc){
     //For one event fScintTotal for detector can never be > 1 (in principle)
-    return (fScintTotal > 0);
+    return (fScintTotal > 0);  
   }else{
+
   //std::cout<<"ScintTotal : "<<fScintTotal<<std::endl;
-  return (fScintTotal >= scint_multiplicity_max);
+  return (fScintTotal >= scint_multiplicity_max);  
 }
-}
+}    
 
 }//end of Tracking namespace
 
