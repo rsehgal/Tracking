@@ -143,7 +143,7 @@ void Scintillator::CreateScintillatorTGeoVolume(){
   fHeight=1;
   fScintTGeoVolume = v.CreateTGeoVolume(new TGeoBBox(fBName.c_str(),fLength/2., fBreadth/2., fHeight/2.));
   fScintTGeoVolume->SetVisibility(kTRUE); 
-  fScintTGeoVolume->SetLineColor(2);
+  fScintTGeoVolume->SetLineColor(kGreen);
 }
 
 // template<bool ForRpc>
@@ -383,7 +383,7 @@ void ScintillatorPlane::CreatePlaneTGeoVolume(){
   fPlaneTGeoVolume->SetVisDaughters(kTRUE);
   fPlaneTGeoVolume->SetTransparency(90);  
   for(int i=0; i < fScintillatorPlane.size(); i++){
-    fPlaneTGeoVolume->AddNode(fScintillatorPlane[i]->GetScintillatorTGeoVolume(),1,(new TGeoTranslation( 0,-fLength/2. + 3*i + 3, 0.)));
+    fPlaneTGeoVolume->AddNode(fScintillatorPlane[i]->GetScintillatorTGeoVolume(),i+1,(new TGeoTranslation( 0,-fLength/2. + 3*i + 3, 0.)));
     std::cout<<"Value : " << (-fLength/2. + 3*i + 3) << std::endl;
   }
 }

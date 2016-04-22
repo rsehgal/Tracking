@@ -20,6 +20,9 @@ class TGeoVolume;
 class TPolyLine3D;
 class TGeoMaterial;
 class TGeoMedium;
+class TEveElementList;
+class TEveGeoShape;
+class TGeoShape;
 
 #include "TPolyMarker3D.h"
 #include "base/Global.h"
@@ -36,6 +39,8 @@ private:
   TGeoMaterial *matVacuum; //= new TGeoMaterial("Vacuum", 0,0,0);
   //static
   TGeoMedium *Vacuum;// = new TGeoMedium("Vacuum",1, matVacuum);
+//  TEveElementList *fEveGeomList;
+//  TEveGeoShape *fEveShape;
 
 
 public:
@@ -50,6 +55,9 @@ public:
   void AddVolume( TGeoVolume *rootVolume, Vector3D<Precision> p);
   void AddVolume( TGeoShape *shape, Vector3D<Precision> p);
   TGeoVolume* CreateTGeoVolume(TGeoShape *shape);
+
+  //void CreateEveGeometry();
+  //void AddEveShape(std::string shapeName,TGeoShape *shape);
 };
 
 } //end of Tracking namespace
