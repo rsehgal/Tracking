@@ -36,13 +36,22 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
 include(MacroUtilities)
 ################################################################################
 
+if(EVE AND OPENGL)
+message(STATUS "You have switched on both EVE and OPENGL, only one can work at a time, so i am Switching OFF both and using ROOTs default graphics")
+set(EVE OFF)
+set(OPENGL OFF)
+endif()
+
+
 if(EVE)
 add_definitions(-DUSE_EVE)
-endif() 
-
+else()
 if(OPENGL)
 add_definitions(-DUSE_OGL)
 endif()
+endif() 
+
+
 
 find_package(ROOT REQUIRED)
 include_directories(AFTER SYSTEM ${ROOT_INCLUDE_DIR})
