@@ -47,7 +47,9 @@ Scintillator::Scintillator(int moduleId):fLength(1.5),fBreadth(50.),fHeight(0.5)
   fBName = ss.str();
   //t = new Tree("6133.root","BSC_DATA_TREE");
   h = new TH1F("h",fBName.c_str(),100,20000,21000);
-  //CreateScintillatorTGeoVolume();
+  #ifndef USE_EVE
+    CreateScintillatorTGeoVolume();
+  #endif
 
 }
 
@@ -355,8 +357,11 @@ void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId){
   for(int i = 0 ; i< fNumOfScintillators ; i++){
     fScintillatorPlane.push_back(new Scintillator(moduleId));
   }
-  //CreatePlaneTGeoVolume();
+  #ifndef USE_EVE
+  CreatePlaneTGeoVolume();
+  #else
   CreateEvePlane();
+  #endif
 }
 
 void ScintillatorPlane::Print(){
@@ -379,8 +384,9 @@ void ScintillatorPlane::InitializeScintillatorPlane(){
   fScintTotal = 0;
 }
 
+#ifdef USE_EVE
 void ScintillatorPlane::CreateEvePlane(){
-   TEveManager::Create();
+ TEveManager::Create();
  TGeoBBox *box = fScintillatorPlane[0]->GetScintShape();
  TGeoHMatrix m;
  Double_t trans[3] = { 0., 0., 0. };
@@ -391,6 +397,7 @@ void ScintillatorPlane::CreateEvePlane(){
   fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
  }
 }
+#endif
 
 void ScintillatorPlane::CreatePlaneTGeoVolume(){
   Visualizer v;

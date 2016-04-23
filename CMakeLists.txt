@@ -36,6 +36,14 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
 include(MacroUtilities)
 ################################################################################
 
+if(EVE)
+add_definitions(-DUSE_EVE)
+endif() 
+
+if(OPENGL)
+add_definitions(-DUSE_OGL)
+endif()
+
 find_package(ROOT REQUIRED)
 include_directories(AFTER SYSTEM ${ROOT_INCLUDE_DIR})
 #find_package(Geant4 REQUIRED)

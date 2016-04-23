@@ -212,8 +212,10 @@ public:
   void Draw();
   TGeoVolume* GetPlaneTGeoVolume(){return fPlaneTGeoVolume;}
 
+  #ifdef USE_EVE
   void CreateEvePlane();
   void Show(){fEve.ShowEve();}
+  #endif
 
 
 };//end of ScintillatorPlane class

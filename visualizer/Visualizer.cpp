@@ -24,10 +24,14 @@
 #include "base/Vector3D.h"
 #include "TPad.h"
 
+#ifdef USE_EVE
 #include "TEveElement.h"
 #include "TEveGeoShape.h"
-#include "TGeoShape.h"
 #include "TEveManager.h"
+#endif
+
+ #include "TGeoShape.h"
+
 #include "TGeoBBox.h"
 
 #define kInfinity 10000
@@ -36,7 +40,7 @@ namespace Tracking {
 
 //TGeoMaterial Visualizer::*matVacuum=NULL;
 //TGeoMedium Visualizer::*Vacuum=NULL;
-
+#ifdef USE_EVE
 void Visualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatrix &mat){
 
   fEveShape = new TEveGeoShape(shapeName.c_str());
@@ -54,15 +58,18 @@ void Visualizer::ShowEve(){
   gEve->DoRedraw3D();
   fApp->Run();
 }
+#endif
 
 Visualizer::Visualizer():fGeoManager(0) {
   // TODO Auto-generated constructor stub
- //  TEveManager::Create();
+// TEveManager::Create();
  fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
  matVacuum = new TGeoMaterial("Vacuum", 0,0,0);
  matVacuum->SetTransparency(50);
  Vacuum = new TGeoMedium("Vacuum",1, matVacuum);
+ #ifdef USE_EVE
  fEveGeomList = new TEveElementList("Geometry");
+ #endif
 }
 
 Visualizer::~Visualizer() {
@@ -85,12 +92,16 @@ void Visualizer::Show(){
   else
   std::get<0>(fVolumes[i])->SetLineColor(kGreen);
 */
+  //fApp->Run();
   }
 
   top->SetLineColor(kGreen);
   gGeoManager->CloseGeometry();
-  //top->Draw();
+  #ifndef USE_OGL
+  top->Draw();
+  #else
   top->Draw("ogl"); //to display the geometry using openGL
+  #endif
   //
   //TPad::x3d("OPENGL");
   gGeoManager->Export("plane.root");
