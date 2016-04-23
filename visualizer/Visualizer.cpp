@@ -24,9 +24,11 @@
 #include "base/Vector3D.h"
 #include "TPad.h"
 
-//#include "TEveElementList.h"
-//#include "TEveGeoShape.h"
-//#include "TGeoShape.h"
+#include "TEveElement.h"
+#include "TEveGeoShape.h"
+#include "TGeoShape.h"
+#include "TEveManager.h"
+#include "TGeoBBox.h"
 
 #define kInfinity 10000
 
@@ -35,25 +37,37 @@ namespace Tracking {
 //TGeoMaterial Visualizer::*matVacuum=NULL;
 //TGeoMedium Visualizer::*Vacuum=NULL;
 
-/*void Visualizer::AddEveShape(std::string shapeName,TGeoShape *shape){
+void Visualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatrix &mat){
 
-  b = new TEveGeoShape(shapeName.c_str());
-  b->SetShape(shape);
-  fEveGeomList->AddElement(b);
-}*/
+  fEveShape = new TEveGeoShape(shapeName.c_str());
+  fEveShape->SetShape(shape);
+  fEveShape->SetMainColor(kRed);
+  fEveShape->SetMainTransparency(0);
+  fEveShape->SetTransMatrix(mat);
+  fEveGeomList->AddElement(fEveShape);
+  
+}
+
+void Visualizer::ShowEve(){
+  // TEveManager::Create();
+  gEve->AddGlobalElement(fEveGeomList);
+  gEve->DoRedraw3D();
+  fApp->Run();
+}
 
 Visualizer::Visualizer():fGeoManager(0) {
   // TODO Auto-generated constructor stub
-  fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
+ //  TEveManager::Create();
+ fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
  matVacuum = new TGeoMaterial("Vacuum", 0,0,0);
  matVacuum->SetTransparency(50);
  Vacuum = new TGeoMedium("Vacuum",1, matVacuum);
- //fEveGeomList = new TEveElementList("Geometry");
+ fEveGeomList = new TEveElementList("Geometry");
 }
 
 Visualizer::~Visualizer() {
   // TODO Auto-generated destructor stub
-  delete fApp;
+ // delete fApp;
 }
 
 void Visualizer::Show(){

@@ -35,6 +35,9 @@
 #include <iostream>
 #include "base/Vector3D.h"
 #include "TGeoVolume.h"
+#include "Visualizer.h"
+
+ class TGeoBBox;
 
 namespace Tracking{
 
@@ -122,6 +125,7 @@ public:
   void CreateScintillatorTGeoVolume();
   void Draw();
   TGeoVolume* GetScintillatorTGeoVolume(){return fScintTGeoVolume;}
+  TGeoBBox* GetScintShape();
 
 
 
@@ -141,6 +145,7 @@ private:
   int fHeight;
 
   TGeoVolume *fPlaneTGeoVolume;
+  Visualizer fEve;
 
 public:
   ScintillatorPlane();//: fScintTotal(0), fNumOfScintillators(8){}
@@ -206,6 +211,9 @@ public:
   void CreatePlaneTGeoVolume();
   void Draw();
   TGeoVolume* GetPlaneTGeoVolume(){return fPlaneTGeoVolume;}
+
+  void CreateEvePlane();
+  void Show(){fEve.ShowEve();}
 
 
 };//end of ScintillatorPlane class
