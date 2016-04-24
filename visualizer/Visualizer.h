@@ -20,10 +20,7 @@ class TGeoVolume;
 class TPolyLine3D;
 class TGeoMaterial;
 class TGeoMedium;
-#ifdef USE_EVE
-class TEveElementList;
-class TEveGeoShape;
-#endif
+
 class TGeoShape;
 class TGeoBBox;
 
@@ -42,12 +39,7 @@ private:
   TGeoMaterial *matVacuum; //= new TGeoMaterial("Vacuum", 0,0,0);
   //static
   TGeoMedium *Vacuum;// = new TGeoMedium("Vacuum",1, matVacuum);
-  #ifdef USE_EVE
-  TEveElementList *fEveGeomList;
-  TEveGeoShape *fEveShape;
-  #endif
-
-
+  
 public:
   Visualizer();
   virtual ~Visualizer();
@@ -61,11 +53,6 @@ public:
   void AddVolume( TGeoShape *shape, Vector3D<Precision> p);
   TGeoVolume* CreateTGeoVolume(TGeoShape *shape);
 
-  //void CreateEveGeometry();
-#ifdef USE_EVE
-  void AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatrix &mat);
-  void ShowEve();
-#endif
 };
 
 } //end of Tracking namespace

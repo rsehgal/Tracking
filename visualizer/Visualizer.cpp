@@ -24,12 +24,6 @@
 #include "base/Vector3D.h"
 #include "TPad.h"
 
-#ifdef USE_EVE
-#include "TEveElement.h"
-#include "TEveGeoShape.h"
-#include "TEveManager.h"
-#endif
-
  #include "TGeoShape.h"
 
 #include "TGeoBBox.h"
@@ -38,27 +32,6 @@
 
 namespace Tracking {
 
-//TGeoMaterial Visualizer::*matVacuum=NULL;
-//TGeoMedium Visualizer::*Vacuum=NULL;
-#ifdef USE_EVE
-void Visualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatrix &mat){
-
-  fEveShape = new TEveGeoShape(shapeName.c_str());
-  fEveShape->SetShape(shape);
-  fEveShape->SetMainColor(kRed);
-  fEveShape->SetMainTransparency(0);
-  fEveShape->SetTransMatrix(mat);
-  fEveGeomList->AddElement(fEveShape);
-  
-}
-
-void Visualizer::ShowEve(){
-  // TEveManager::Create();
-  gEve->AddGlobalElement(fEveGeomList);
-  gEve->DoRedraw3D();
-  fApp->Run();
-}
-#endif
 
 Visualizer::Visualizer():fGeoManager(0) {
   // TODO Auto-generated constructor stub
@@ -67,9 +40,7 @@ Visualizer::Visualizer():fGeoManager(0) {
  matVacuum = new TGeoMaterial("Vacuum", 0,0,0);
  matVacuum->SetTransparency(50);
  Vacuum = new TGeoMedium("Vacuum",1, matVacuum);
- #ifdef USE_EVE
- fEveGeomList = new TEveElementList("Geometry");
- #endif
+
 }
 
 Visualizer::~Visualizer() {
@@ -87,12 +58,7 @@ void Visualizer::Show(){
   gGeoManager->SetTopVolume(top);
   for(int i = 0 ; i < fVolumes.size() ; i++){
   top->AddNode(std::get<0>(fVolumes[i]), 1 , std::get<1>(fVolumes[i]));
-  /*if(i%2)
-  std::get<0>(fVolumes[i])->SetLineColor(kRed);
-  else
-  std::get<0>(fVolumes[i])->SetLineColor(kGreen);
-*/
-  //fApp->Run();
+
   }
 
   top->SetLineColor(kGreen);

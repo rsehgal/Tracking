@@ -12,9 +12,13 @@
 #include <TApplication.h>
 #include <TFile.h>
 #include <TGeoBBox.h>
-#include "Visualizer.h"
 #include "TGeoMatrix.h"
+#ifdef USE_EVE
  #include "TEveManager.h"
+ #include "Eve/EveVisualizer.h"
+#else
+ #include "Visualizer.h"
+#endif
 ///#include "Tree.h"
 
 namespace Tracking{
@@ -138,9 +142,9 @@ void Scintillator::DetectAndSetHit(int evNo){
 
   //std::cout<<"fScintHit : "<< fScintHit <<std::endl;
 }
-
+#ifndef USE_EVE
 void Scintillator::CreateScintillatorTGeoVolume(){
-  Visualizer v;
+  TrackingVisualizer v;
   fLength=100;
   fBreadth=3;
   fHeight=1;
@@ -148,10 +152,11 @@ void Scintillator::CreateScintillatorTGeoVolume(){
   fScintTGeoVolume->SetVisibility(kTRUE); 
   fScintTGeoVolume->SetLineColor(kGreen);
 }
-
+#else
 TGeoBBox* Scintillator::GetScintShape(){
   return new TGeoBBox(fBName.c_str(),fLength/2., fBreadth/2., fHeight/2.);
 }
+#endif
 
 // template<bool ForRpc>
 // void Scintillator::DetectAndSetHit(Tree &t, int evNo){
@@ -397,10 +402,9 @@ void ScintillatorPlane::CreateEvePlane(){
   fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
  }
 }
-#endif
-
+#else
 void ScintillatorPlane::CreatePlaneTGeoVolume(){
-  Visualizer v;
+  TrackingVisualizer v;
   fLength=100;
   fBreadth=100;
   fHeight=1;
@@ -413,7 +417,7 @@ void ScintillatorPlane::CreatePlaneTGeoVolume(){
     std::cout<<"Value : " << (-fLength/2. + 3*i + 3) << std::endl;
   }
 }
-
+#endif
 void ScintillatorPlane::Draw(){
 
 }

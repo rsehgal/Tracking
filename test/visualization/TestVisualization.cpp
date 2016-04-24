@@ -12,11 +12,17 @@
 
 
 #define kInfinity 100
+#ifdef USE_EVE
+#include "Eve/EveVisualizer.h"
+typedef Tracking::EveVisualizer TrackingVisualizer;
+#else
 #include "Visualizer.h"
+typedef Tracking::Visualizer TrackingVisualizer;
+#endif
 
 int main(){
 
-  Tracking::Visualizer v;
+  TrackingVisualizer v;
 
   //Geometry creation
   TGeoShape *sphere = new TGeoSphere("SPHERE",30,40,0,180,0,300);
@@ -53,7 +59,7 @@ int main(){
 
   //v.Show(sphVol);
   //Show method to display the volumes
-  ScintillatorPlane *sP = new ScintillatorPlane(1,32,"Test");
+  ScintillatorPlane *sP = new ScintillatorPlane(1,64,"Test");
  #ifndef USE_EVE
    v.AddVolume(sP->GetPlaneTGeoVolume());
    v.Show();

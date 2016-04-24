@@ -35,9 +35,17 @@
 #include <iostream>
 #include "base/Vector3D.h"
 #include "TGeoVolume.h"
-#include "Visualizer.h"
 
- class TGeoBBox;
+#ifdef USE_EVE
+#include "Eve/EveVisualizer.h"
+typedef EveVisualizer TrackingVisualizer;
+#else
+#include "Visualizer.h"
+typedef Visualizer TrackingVisualizer;
+#endif
+
+class TGeoBBox;
+
 
 namespace Tracking{
 
@@ -145,7 +153,11 @@ private:
   int fHeight;
 
   TGeoVolume *fPlaneTGeoVolume;
-  Visualizer fEve;
+  //Visualizer fEve;
+  // #ifdef USE_EVE
+  // EveVisualizer fEve;
+  // #endif
+  TrackingVisualizer fEve;
 
 public:
   ScintillatorPlane();//: fScintTotal(0), fNumOfScintillators(8){}

@@ -62,9 +62,15 @@ include_directories(${PROJECT_SOURCE_DIR}/inc)
 include_directories(${PROJECT_SOURCE_DIR}/TreeExercise)
 include_directories(${PROJECT_SOURCE_DIR}/visualizer)
 
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Stats.cpp
-${CMAKE_SOURCE_DIR}/visualizer/Visualizer.cpp )
+
+
+if(EVE)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/inc/*.h ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.h ${CMAKE_SOURCE_DIR}/visualizer/Eve/EveVisualizer.h)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Stats.cpp ${CMAKE_SOURCE_DIR}/visualizer/Eve/EveVisualizer.cpp )
+else()
 file(GLOB headers ${PROJECT_SOURCE_DIR}/inc/*.h ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.h ${CMAKE_SOURCE_DIR}/visualizer/Visualizer.h)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Tree.cpp ${PROJECT_SOURCE_DIR}/TreeExercise/Stats.cpp ${CMAKE_SOURCE_DIR}/visualizer/Visualizer.cpp )
+endif(EVE)
 
 file(GLOB CFG_FILES ${PROJECT_SOURCE_DIR}/CfgFiles/*)
 file(COPY ${CFG_FILES} DESTINATION ${PROJECT_SOURCE_DIR}/build)
