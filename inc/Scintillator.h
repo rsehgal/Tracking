@@ -223,6 +223,7 @@ public:
   }
 
   void CreatePlaneTGeoVolume();
+  void CreatePlaneTGeoVolume(double dZ);
   void Draw();
   TGeoVolume* GetPlaneTGeoVolume(){return fPlaneTGeoVolume;}
 

@@ -381,7 +381,8 @@ void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId){
     }
 
   #ifndef USE_EVE
-  CreatePlaneTGeoVolume();
+  //CreatePlaneTGeoVolume();
+  CreatePlaneTGeoVolume(zPos);
   #else
   CreateEvePlane(zPos);
   #endif
@@ -452,6 +453,21 @@ void ScintillatorPlane::CreatePlaneTGeoVolume(){
   for(int i=0; i < fScintillatorPlane.size(); i++){
     fPlaneTGeoVolume->AddNode(fScintillatorPlane[i]->GetScintillatorTGeoVolume(),i+1,(new TGeoTranslation( 0,-fLength/2. + 3*i + 3, 0.)));
     std::cout<<"Value : " << (-fLength/2. + 3*i + 3) << std::endl;
+  }
+}
+
+void ScintillatorPlane::CreatePlaneTGeoVolume(double dZ){
+  TrackingVisualizer v;
+  fLength=100;
+  fBreadth=100;
+  fHeight=1;
+  fPlaneTGeoVolume = v.CreateTGeoVolume(new TGeoBBox(fPlaneName.c_str(),fLength/2., fBreadth/2., fHeight/2.));
+  fPlaneTGeoVolume->SetVisibility(kTRUE);
+  fPlaneTGeoVolume->SetVisDaughters(kTRUE);
+  fPlaneTGeoVolume->SetTransparency(90);
+  for(int i=0; i < fScintillatorPlane.size(); i++){
+    fPlaneTGeoVolume->AddNode(fScintillatorPlane[i]->GetScintillatorTGeoVolume(),i+1,(new TGeoTranslation( 0,-fLength/2. + 3*i + 3, dZ)));
+    //std::cout<<"Value : " << (-fLength/2. + 3*i + 3) << std::endl;
   }
 }
 #endif

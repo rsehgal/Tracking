@@ -63,17 +63,21 @@ int main(){
   //v.Show(sphVol);
   //Show method to display the volumes
   //ScintillatorPlane *sP = new ScintillatorPlane(1,32,"Test");
-  TEveManager::Create();
+
   RPC *sP = new RPC(2,32,"FirstRpc",-20.);
-  RPC *rP = new RPC(3,32,"SecondRpc",-0.);
+  RPC *rP = new RPC(3,32,"SecondRpc",20.);
+  RPC *tP = new RPC(3,32,"SecondRpc",60.);
 
  #ifdef SHOW_VISUALIZATION
  #ifndef USE_EVE
    v.AddVolume(sP->GetPlaneTGeoVolume());
+   v.AddVolume(rP->GetPlaneTGeoVolume());
+   v.AddVolume(tP->GetPlaneTGeoVolume());
    v.Show();
   #else
 
   //rP->Show();
+   TEveManager::Create();
    sP->Show();
   #endif
  #endif

@@ -143,7 +143,10 @@ public:
 	int GetEventCount(){return fEventCount;}
 	void GetHitMap(){rpc->GetHitMap();}
 	int GetHitCount(){return rpc->GetShowerCount();}
+	TGeoVolume* GetPlaneTGeoVolume(){return rpc->GetPlaneTGeoVolume();}
+#ifdef USE_EVE
 	void Show(){rpc->Show();}
+#endif
 
 };//end of RPC class
 
