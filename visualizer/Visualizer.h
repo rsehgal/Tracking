@@ -32,7 +32,7 @@ namespace Tracking {
 
 class Visualizer {
 private:
-  TApplication *fApp;       // ROOT application used for visualization
+ // TApplication *fApp;       // ROOT application used for visualization
   TGeoManager *fGeoManager; // ROOT geometry manager
   std::vector<std::tuple<TGeoVolume*, TGeoTranslation*> > fVolumes;
   //static

@@ -10,6 +10,7 @@
 #include <TGeoBBox.h>
 #include "Scintillator.h"
 #include "RPC.h"
+#include "TApplication.h"
 
 
 
@@ -26,6 +27,7 @@ typedef Tracking::Visualizer TrackingVisualizer;
 int main(){
 
   TrackingVisualizer v;
+  TApplication *fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
 
   //Geometry creation
   TGeoShape *sphere = new TGeoSphere("SPHERE",30,40,0,180,0,300);
@@ -74,6 +76,7 @@ int main(){
    v.AddVolume(rP->GetPlaneTGeoVolume());
    v.AddVolume(tP->GetPlaneTGeoVolume());
    v.Show();
+   fApp->Run();
   #else
 
   //rP->Show();

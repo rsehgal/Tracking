@@ -37,7 +37,9 @@ Scintillator::Scintillator():fLength(0),fBreadth(0),fHeight(0), fScintHit(false)
   ss << "Module" << fModuleId+2 <<"_LE_CH" << fScintId;
   fBName = ss.str();
   //t = new Tree("6133.root","BSC_DATA_TREE");
-  h = new TH1F("h",fBName.c_str(),100,20000,21000);
+
+  //Commenting Histogram for the time being
+  //h = new TH1F("h",fBName.c_str(),100,20000,21000);
 
 }
 //Setting default value corresponding the dimension of strip of RPC
@@ -50,7 +52,9 @@ Scintillator::Scintillator(int moduleId):fLength(1.5),fBreadth(50.),fHeight(0.5)
   ss << "Module" << fModuleId <<"_LE_CH" << fScintId;
   fBName = ss.str();
   //t = new Tree("6133.root","BSC_DATA_TREE");
-  h = new TH1F("h",fBName.c_str(),100,20000,21000);
+
+  //Commenting Histogram for the time being
+  //h = new TH1F("h",fBName.c_str(),100,20000,21000);
   #ifndef USE_EVE
     CreateScintillatorTGeoVolume();
   #endif

@@ -36,7 +36,7 @@ namespace Tracking {
 Visualizer::Visualizer():fGeoManager(0) {
   // TODO Auto-generated constructor stub
 // TEveManager::Create();
- fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
+ //fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
  matVacuum = new TGeoMaterial("Vacuum", 0,0,0);
  matVacuum->SetTransparency(50);
  Vacuum = new TGeoMedium("Vacuum",1, matVacuum);
@@ -72,7 +72,7 @@ void Visualizer::Show(){
   //TPad::x3d("OPENGL");
   gGeoManager->Export("plane.root");
   //top->Export("planeTop.root");
-  fApp->Run();
+  //fApp->Run();
 }
 
 void Visualizer::Show(TGeoVolume *vol){
@@ -82,7 +82,7 @@ void Visualizer::Show(TGeoVolume *vol){
   top->AddNode(vol, 1);
   gGeoManager->CloseGeometry();
   top->Draw();
-  fApp->Run();
+  //fApp->Run();
 }
 
 void Visualizer::AddVolume( TGeoVolume *rootVolume) {
