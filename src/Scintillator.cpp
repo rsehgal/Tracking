@@ -348,7 +348,18 @@ ScintillatorPlane::ScintillatorPlane(int moduleId, int numOfScintillators, std::
     fPlaneName(planeName){
 
   InitializeScintillatorPlane();
-  CreatePlaneOfScintillators(moduleId);
+  //CreatePlaneOfScintillators(moduleId);
+
+}
+
+ScintillatorPlane::ScintillatorPlane(int moduleId, int numOfScintillators,double zPos, std::string planeName):
+    fNumOfScintillators(numOfScintillators),
+    fScintTotal(0),
+    fPlaneName(planeName){
+
+  InitializeScintillatorPlane();
+  CreatePlaneOfScintillators(moduleId,zPos);
+
 }
 
 void ScintillatorPlane::CreatePlaneOfScintillators(){
@@ -362,10 +373,17 @@ void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId){
   for(int i = 0 ; i< fNumOfScintillators ; i++){
     fScintillatorPlane.push_back(new Scintillator(moduleId));
   }
+}
+  void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId,double zPos){
+    Scintillator::SetStartingStripNum(-1);
+    for(int i = 0 ; i< fNumOfScintillators ; i++){
+      fScintillatorPlane.push_back(new Scintillator(moduleId));
+    }
+
   #ifndef USE_EVE
   CreatePlaneTGeoVolume();
   #else
-  CreateEvePlane();
+  CreateEvePlane(zPos);
   #endif
 }
 
@@ -391,7 +409,7 @@ void ScintillatorPlane::InitializeScintillatorPlane(){
 
 #ifdef USE_EVE
 void ScintillatorPlane::CreateEvePlane(){
- TEveManager::Create();
+// TEveManager::Create();
  TGeoBBox *box = fScintillatorPlane[0]->GetScintShape();
  TGeoHMatrix m;
  Double_t trans[3] = { 0., 0., 0. };
@@ -400,6 +418,25 @@ void ScintillatorPlane::CreateEvePlane(){
  for(int i=0; i < fScintillatorPlane.size(); i++){
    m.SetDx(-fLength/2.+i*1.6);
   fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
+ }
+}
+
+void ScintillatorPlane::CreateEvePlane(double dZ){
+ //TEveManager::Create();
+ TGeoBBox *box = fScintillatorPlane[0]->GetScintShape();
+ TGeoHMatrix m;
+ Double_t trans[3] = { 0., 0., 0. };
+ m.SetTranslation(trans);
+
+ for(int i=0; i < fScintillatorPlane.size(); i++){
+   m.SetDx(-fLength/2.+i*1.6);
+   m.SetDz(dZ);
+   int channelId = fScintillatorPlane[i]->GetChannelId();
+   if(channelId > 40 && channelId < 53)
+     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box,2, m );
+   else
+     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box,3, m );
+  //fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
  }
 }
 #else

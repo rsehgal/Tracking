@@ -163,11 +163,13 @@ public:
   ScintillatorPlane();//: fScintTotal(0), fNumOfScintillators(8){}
   ScintillatorPlane(int numOfScintillators, std::string planeName="Test-ScintillatorPlane");
   ScintillatorPlane(int moduleId, int numOfScintillators, std::string planeName="Test-ScintillatorPlane");
+  ScintillatorPlane(int moduleId, int numOfScintillators, double zPos, std::string planeName="Test-ScintillatorPlane");
 
   ~ScintillatorPlane(){}
 
   void CreatePlaneOfScintillators();
   void CreatePlaneOfScintillators(int moduleId);
+  void CreatePlaneOfScintillators(int moduleId,double zPos);
   void ReadScintMapFileAndCreatePlane();
 
   TRACKING_INLINE
@@ -226,6 +228,7 @@ public:
 
   #ifdef USE_EVE
   void CreateEvePlane();
+  void CreateEvePlane(double dZ);
   void Show(){fEve.ShowEve();}
   #endif
 

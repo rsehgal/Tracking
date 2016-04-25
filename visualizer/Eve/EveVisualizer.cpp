@@ -32,8 +32,23 @@ void EveVisualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatr
   
 }
 
+void EveVisualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, int color, TGeoHMatrix &mat){
+
+  fEveShape = new TEveGeoShape(shapeName.c_str());
+  fEveShape->SetShape(shape);
+  fEveShape->SetMainColor(color);
+  fEveShape->SetMainTransparency(50);
+  fEveShape->SetTransMatrix(mat);
+  fEveGeomList->AddElement(fEveShape);
+
+}
+
 void EveVisualizer::ShowEve(){
   // TEveManager::Create();
+  /*TGeoHMatrix mat;
+  Double_t trans[3] = { 0., 0., dZ };
+  mat.SetTranslation(trans);
+  fEveGeomList->SetTransmatrix(mat);*/
   gEve->AddGlobalElement(fEveGeomList);
   gEve->DoRedraw3D();
   fApp->Run();

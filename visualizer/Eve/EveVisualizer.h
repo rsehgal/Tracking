@@ -27,7 +27,8 @@ private:
 public:
   EveVisualizer();
   void AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatrix &mat);
-  void ShowEve();  
+  void AddEveShape(std::string shapeName,TGeoBBox *shape, int color, TGeoHMatrix &mat);
+  void ShowEve();
 
 };
 

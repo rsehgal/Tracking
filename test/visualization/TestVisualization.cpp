@@ -12,9 +12,11 @@
 #include "RPC.h"
 
 
+
 #define kInfinity 100
 #ifdef USE_EVE
 #include "Eve/EveVisualizer.h"
+#include "TEveManager.h"
 typedef Tracking::EveVisualizer TrackingVisualizer;
 #else
 #include "Visualizer.h"
@@ -61,12 +63,17 @@ int main(){
   //v.Show(sphVol);
   //Show method to display the volumes
   //ScintillatorPlane *sP = new ScintillatorPlane(1,32,"Test");
-  RPC *sP = new RPC(2,96,"FirstRpc");
+  TEveManager::Create();
+  RPC *sP = new RPC(2,32,"FirstRpc",-20.);
+  RPC *rP = new RPC(3,32,"SecondRpc",-0.);
+
  #ifdef SHOW_VISUALIZATION
  #ifndef USE_EVE
    v.AddVolume(sP->GetPlaneTGeoVolume());
    v.Show();
   #else
+
+  //rP->Show();
    sP->Show();
   #endif
  #endif

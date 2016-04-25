@@ -60,6 +60,7 @@ public:
 	}
 	RPC(std::string, Precision, Precision, Precision, int);
 	RPC(int moduleId, int numOfChannels, std::string rpcName, int startId = 31);
+	RPC(int moduleId, int numOfChannels, std::string rpcName,double zPos, int startId = 31);
 	~RPC(){}
 
 	void SetStatictics(){stat.SetStatistics(fName,map_station,fEtaPartition,fTriggerLayer);}
