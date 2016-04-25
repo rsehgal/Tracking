@@ -9,6 +9,7 @@
 #include "base/Vector3D.h"
 #include <TGeoBBox.h>
 #include "Scintillator.h"
+#include "RPC.h"
 
 
 #define kInfinity 100
@@ -59,13 +60,16 @@ int main(){
 
   //v.Show(sphVol);
   //Show method to display the volumes
-  ScintillatorPlane *sP = new ScintillatorPlane(1,32,"Test");
+  //ScintillatorPlane *sP = new ScintillatorPlane(1,32,"Test");
+  RPC *sP = new RPC(2,96,"FirstRpc");
+ #ifdef SHOW_VISUALIZATION
  #ifndef USE_EVE
    v.AddVolume(sP->GetPlaneTGeoVolume());
    v.Show();
   #else
    sP->Show();
   #endif
+ #endif
 
 
 

@@ -44,6 +44,9 @@ if(CCACHE_FOUND)
   set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 endif(CCACHE_FOUND)
 
+if(VISUALIZATION)
+add_definitions(-DSHOW_VISUALIZATION)
+endif(VISUALIZATION)
 
 if(EVE AND OPENGL)
 message(STATUS "You have switched on both EVE and OPENGL, only one can work at a time, so i am Switching OFF both and using ROOTs default graphics")
