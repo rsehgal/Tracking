@@ -25,8 +25,8 @@ void EveVisualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatr
 
   fEveShape = new TEveGeoShape(shapeName.c_str());
   fEveShape->SetShape(shape);
-  fEveShape->SetMainColor(kRed);
-  fEveShape->SetMainTransparency(0);
+  fEveShape->SetMainColor(kGreen);
+  fEveShape->SetMainTransparency(50);
   fEveShape->SetTransMatrix(mat);
   fEveGeomList->AddElement(fEveShape);
   

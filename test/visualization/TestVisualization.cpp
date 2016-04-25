@@ -59,7 +59,7 @@ int main(){
 
   //v.Show(sphVol);
   //Show method to display the volumes
-  ScintillatorPlane *sP = new ScintillatorPlane(1,64,"Test");
+  ScintillatorPlane *sP = new ScintillatorPlane(1,32,"Test");
  #ifndef USE_EVE
    v.AddVolume(sP->GetPlaneTGeoVolume());
    v.Show();
