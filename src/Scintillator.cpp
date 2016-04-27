@@ -359,7 +359,9 @@ ScintillatorPlane::ScintillatorPlane(int moduleId, int numOfScintillators, std::
 ScintillatorPlane::ScintillatorPlane(int moduleId, int numOfScintillators,double zPos, std::string planeName):
     fNumOfScintillators(numOfScintillators),
     fScintTotal(0),
-    fPlaneName(planeName){
+    fPlaneName(planeName),
+    fLength(100.),
+    fBreadth(100.){
 
   InitializeScintillatorPlane();
   CreatePlaneOfScintillators(moduleId,zPos);
@@ -421,6 +423,7 @@ void ScintillatorPlane::CreateEvePlane(){
  m.SetTranslation(trans);
 
  for(int i=0; i < fScintillatorPlane.size(); i++){
+   std::cout<<" X trans : "<< (-fLength/2.+i*1.6) << std::endl;
    m.SetDx(-fLength/2.+i*1.6);
   fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
   // Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
@@ -435,7 +438,10 @@ void ScintillatorPlane::CreateEvePlane(double dZ){
  m.SetTranslation(trans);
 
  for(int i=0; i < fScintillatorPlane.size(); i++){
-   m.SetDx(-fLength/2.+i*1.6);
+
+   //std::cout<<"fLength : "<< fLength << " :  X trans : "<< (-fLength/2.+1.6+i*1.6) << std::endl;
+   //m.SetDx(-fLength/2.+i*1.6);
+   m.SetDx(-fLength/2.+1.6+i*1.6);
    //m.SetDx(20.);
    m.SetDz(dZ);
    int channelId = fScintillatorPlane[i]->GetChannelId();
@@ -447,6 +453,7 @@ void ScintillatorPlane::CreateEvePlane(double dZ){
      //Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box,3, m );
   //fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
  }
+ std::cout<<"=================================================================================" << std::endl;
 }
 #else
 void ScintillatorPlane::CreatePlaneTGeoVolume(){
@@ -459,8 +466,8 @@ void ScintillatorPlane::CreatePlaneTGeoVolume(){
   fPlaneTGeoVolume->SetVisDaughters(kTRUE);
   fPlaneTGeoVolume->SetTransparency(90);  
   for(int i=0; i < fScintillatorPlane.size(); i++){
-    fPlaneTGeoVolume->AddNode(fScintillatorPlane[i]->GetScintillatorTGeoVolume(),i+1,(new TGeoTranslation( 0,-fLength/2. + 3*i + 3, 0.)));
-    std::cout<<"Value : " << (-fLength/2. + 3*i + 3) << std::endl;
+    fPlaneTGeoVolume->AddNode(fScintillatorPlane[i]->GetScintillatorTGeoVolume(),i+1,(new TGeoTranslation( 0,-fLength/2. + 3.2*i + 3.2, 0.)));
+    //std::cout<<"Value : " << (-fLength/2. + 3*i + 3) << std::endl;
   }
 }
 
