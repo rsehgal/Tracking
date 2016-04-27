@@ -43,7 +43,30 @@ Scintillator::Scintillator():fLength(0),fBreadth(0),fHeight(0), fScintHit(false)
 
 }
 //Setting default value corresponding the dimension of strip of RPC
+
 Scintillator::Scintillator(int moduleId):fLength(1.5),fBreadth(50.),fHeight(0.5), fScintHit(false) ,fModuleId(moduleId) {
+  fId++;
+  fScintId = fId;
+  sStripNum++;
+  fStripNum = sStripNum;
+  std::stringstream ss;
+  ss << "Module" << fModuleId <<"_LE_CH" << fScintId;
+  fBName = ss.str();
+  //t = new Tree("6133.root","BSC_DATA_TREE");
+
+  //Commenting Histogram for the time being
+  //h = new TH1F("h",fBName.c_str(),100,20000,21000);
+  #ifndef USE_EVE
+    CreateScintillatorTGeoVolume();
+  #endif
+
+}
+
+Scintillator::Scintillator(int moduleId,bool forRpc):fLength(1.5),fBreadth(50.),fHeight(0.5), fScintHit(false) ,fModuleId(moduleId) {
+  if(!forRpc){ // Scintillator plane
+    fLength = 9.;
+    fBreadth = 90.;
+  }
   fId++;
   fScintId = fId;
   sStripNum++;
@@ -158,7 +181,8 @@ void Scintillator::CreateScintillatorTGeoVolume(){
 }
 #else
 TGeoBBox* Scintillator::GetScintShape(){
-  return new TGeoBBox(fBName.c_str(),fLength/2., fBreadth/2., fHeight/2.);
+  //return new TGeoBBox(fBName.c_str(),fLength/2., fBreadth/2., fHeight/2.);
+  return new TGeoBBox(fBName.c_str(),fLength, fBreadth, fHeight);
 }
 #endif
 
@@ -368,6 +392,19 @@ ScintillatorPlane::ScintillatorPlane(int moduleId, int numOfScintillators,double
 
 }
 
+
+ScintillatorPlane::ScintillatorPlane(int moduleId, int numOfScintillators,double zPos, bool forRpc, std::string planeName):
+    fNumOfScintillators(numOfScintillators),
+    fScintTotal(0),
+    fPlaneName(planeName),
+    fLength(100.),
+    fBreadth(100.){
+
+  InitializeScintillatorPlane();
+  CreatePlaneOfScintillators(moduleId,zPos,forRpc);
+
+}
+
 void ScintillatorPlane::CreatePlaneOfScintillators(){
   for(int i = 0 ; i< fNumOfScintillators ; i++){
     fScintillatorPlane.push_back(new Scintillator());
@@ -380,6 +417,7 @@ void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId){
     fScintillatorPlane.push_back(new Scintillator(moduleId));
   }
 }
+
   void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId,double zPos){
     Scintillator::SetStartingStripNum(-1);
     for(int i = 0 ; i< fNumOfScintillators ; i++){
@@ -393,6 +431,33 @@ void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId){
   CreateEvePlane(zPos);
   #endif
 }
+
+
+  void ScintillatorPlane::CreatePlaneOfScintillators(int moduleId,double zPos, bool forRpc){
+    Scintillator::SetStartingStripNum(-1);
+    if(forRpc){
+      fLength = 100.;
+      fBreadth = 100.;
+    }
+    else{
+      fLength=144.;
+      fBreadth = 180.;
+    }
+
+    for(int i = 0 ; i< fNumOfScintillators ; i++){
+      //fScintillatorPlane.push_back(new Scintillator(moduleId));
+      fScintillatorPlane.push_back(new Scintillator(moduleId,forRpc));
+    }
+
+  #ifndef USE_EVE
+  //CreatePlaneTGeoVolume();
+  CreatePlaneTGeoVolume(zPos);
+  #else
+  CreateEvePlane(zPos,forRpc);
+  #endif
+}
+
+
 
 void ScintillatorPlane::Print(){
     std::cout<<"Plane-Name : "<<fPlaneName<<std::endl
@@ -450,6 +515,39 @@ void ScintillatorPlane::CreateEvePlane(double dZ){
      //Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box,2, m );
    else
      fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
+     //Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box,3, m );
+  //fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
+ }
+ std::cout<<"=================================================================================" << std::endl;
+}
+
+void ScintillatorPlane::CreateEvePlane(double dZ, bool forRpc){
+ //TEveManager::Create();
+ //TGeoBBox *box = fScintillatorPlane[0]->GetScintShape();
+ TGeoHMatrix m;
+ Double_t trans[3] = { 0., 0., 0. };
+ m.SetTranslation(trans);
+
+ for(int i=0; i < fScintillatorPlane.size(); i++){
+
+   //std::cout<<"fLength : "<< fLength << " :  X trans : "<< (-fLength/2.+1.6+i*1.6) << std::endl;
+   //m.SetDx(-fLength/2.+i*1.6);
+   if(forRpc)
+     m.SetDx(-fLength/2.+i*3);
+   else
+     m.SetDx(-fLength/2.+i*18);
+
+    m.SetDz(dZ);
+   int channelId = fScintillatorPlane[i]->GetChannelId();
+
+   fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
+/*
+   if(channelId > 40 && channelId < 53)
+     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),2, m );
+     //Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box,2, m );
+   else
+     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
+*/
      //Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box,3, m );
   //fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
  }

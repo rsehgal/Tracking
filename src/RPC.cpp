@@ -36,7 +36,7 @@ RPC::RPC(int moduleId, int numOfChannels, std::string rpcName,double zPos,int st
   Scintillator::SetStartingId(startId);
   //rpc->resize(fNumOfChannels);
   //rpc = new ScintillatorPlane(fModuleId,fNumOfChannels,fName);
-  rpc = new Rpc(fModuleId,fNumOfChannels,zPos,fName);
+  rpc = new Rpc(fModuleId,fNumOfChannels,zPos,true,fName);
 }
 
 void RPC::SetGap(int i, std::string gapName, Precision gapCurr, Precision gapVset, Precision gapVmon, int gapStation){

@@ -38,12 +38,15 @@ class Singleton
     {
         m_value = v;
     }
-    static Singleton *instance()
+
+    static Singleton *instance();
+
+    /*static Singleton *instance()
     {
         if (!s_instance)
           s_instance = new Singleton;
         return s_instance;
-    }
+    }*/
     void AddElement(TEveGeoShape *eveShape){
       fEveGeomList->AddElement(eveShape);
     }
@@ -60,7 +63,9 @@ class Singleton
 // Allocating and initializing Singleton's
 // static data member.  The pointer is being
 // allocated - not the object inself.
-Singleton *Singleton::s_instance = 0;
+
+//Singleton *Singleton::s_instance = 0;
+
 }//end of Tracking namespace
 
 #endif /* VISUALIZER_EVE_SINGLETON_H_ */

@@ -12,6 +12,8 @@
 #include "RPC.h"
 #include "TApplication.h"
 
+#include "Target.h"
+
 
 
 #define kInfinity 100
@@ -69,9 +71,14 @@ int main(){
 #ifdef USE_EVE
   TEveManager::Create();
 #endif
-  RPC *sP = new RPC(2,32,"FirstRpc",-20.);
-  RPC *rP = new RPC(3,32,"SecondRpc",20.);
-  RPC *tP = new RPC(4,32,"SecondRpc",60.);
+  ScintillatorPlane *s1 = new ScintillatorPlane(2,8,-105.,false,"TopPlane");
+  ScintillatorPlane *s2 = new ScintillatorPlane(2,8,105.,false,"BottomPlane");
+  RPC *rpc1 = new RPC(2,32,"FirstRpc",-75.);
+  RPC *rpc2 = new RPC(3,32,"SecondRpc",-45.);
+  RPC *rpc3 = new RPC(4,32,"ThirdRpc",-15.);
+  RPC *rpc4 = new RPC(5,32,"ThirdRpc",15.);
+  RPC *rpc5 = new RPC(6,32,"SecondRpc",45.);
+  RPC *rpc6 = new RPC(7,32,"FirstRpc",75.);
 
  #ifdef SHOW_VISUALIZATION
  #ifndef USE_EVE
@@ -83,7 +90,8 @@ int main(){
   #else
 
    //rP->Show();
-   tP->Show();
+   new Target();
+   rpc6->Show();
   #endif
    fApp->Run();
  #endif

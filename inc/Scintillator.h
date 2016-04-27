@@ -85,6 +85,7 @@ private:
 public:
   Scintillator();//:fLength(0),fBreadth(0),fHeight(0), fScintHit(false) {}
   Scintillator(int moduleId);
+  Scintillator(int moduleId,bool forRpc);
   Scintillator(double length, double breadth, double height=1);// :
     //fLength(length), fBreadth(breadth), fHeight(height), fScintHit(false) {}
   ~Scintillator();
@@ -169,12 +170,16 @@ public:
   ScintillatorPlane(int numOfScintillators, std::string planeName="Test-ScintillatorPlane");
   ScintillatorPlane(int moduleId, int numOfScintillators, std::string planeName="Test-ScintillatorPlane");
   ScintillatorPlane(int moduleId, int numOfScintillators, double zPos, std::string planeName="Test-ScintillatorPlane");
+  ScintillatorPlane(int moduleId, int numOfScintillators, double zPos, bool forRpc, std::string planeName="Test-ScintillatorPlane");
 
   ~ScintillatorPlane(){}
 
   void CreatePlaneOfScintillators();
   void CreatePlaneOfScintillators(int moduleId);
+
+
   void CreatePlaneOfScintillators(int moduleId,double zPos);
+  void CreatePlaneOfScintillators(int moduleId,double zPos,bool forRpc);
   void ReadScintMapFileAndCreatePlane();
 
   TRACKING_INLINE
@@ -235,6 +240,7 @@ public:
   #ifdef USE_EVE
   void CreateEvePlane();
   void CreateEvePlane(double dZ);
+  void CreateEvePlane(double dZ,bool forRpc);
   void Show(){fEve.ShowEve();}
   //void Show(){Singleton::instance()->GetEveVisualizer()->ShowEve();}
   #endif
