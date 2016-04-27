@@ -67,8 +67,15 @@ Scintillator::Scintillator(int moduleId,bool forRpc):fLength(3.),fBreadth(100.),
     fLength = 18.;
     fBreadth = 180.;
   }
+
   fId++;
   fScintId = fId;
+
+  //Just a test, manually setting some hit strips
+  if(fScintId==35 || fScintId==38 || fScintId==42)
+    fScintHit = true;
+
+
   sStripNum++;
   fStripNum = sStripNum;
   std::stringstream ss;
@@ -533,7 +540,12 @@ void ScintillatorPlane::CreateEvePlane(double dZ, bool forRpc){
      m.SetDz(dZ);
      int channelId = fScintillatorPlane[i]->GetChannelId();
 
-     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
+     if(fScintillatorPlane[i]->GetScintHit())
+       fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[i]->GetScintShape(),2, m );
+     else
+       fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[i]->GetScintShape(),3, m );
+
+     //fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
 /*
    if(channelId > 40 && channelId < 53)
      fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),2, m );
