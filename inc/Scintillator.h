@@ -35,10 +35,13 @@
 #include <iostream>
 #include "base/Vector3D.h"
 #include "TGeoVolume.h"
+//#include "Singleton.h"
 
 #ifdef USE_EVE
 #include "Eve/EveVisualizer.h"
 typedef EveVisualizer TrackingVisualizer;
+//typedef Singleton::instance()->GetEveVisualizer() TrackingVisualizer;
+
 #else
 #include "Visualizer.h"
 typedef Visualizer TrackingVisualizer;
@@ -157,7 +160,9 @@ private:
   // #ifdef USE_EVE
   // EveVisualizer fEve;
   // #endif
+//#ifndef USE_EVE
   TrackingVisualizer fEve;
+//#endif
 
 public:
   ScintillatorPlane();//: fScintTotal(0), fNumOfScintillators(8){}
@@ -231,6 +236,7 @@ public:
   void CreateEvePlane();
   void CreateEvePlane(double dZ);
   void Show(){fEve.ShowEve();}
+  //void Show(){Singleton::instance()->GetEveVisualizer()->ShowEve();}
   #endif
 
 

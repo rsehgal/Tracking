@@ -8,6 +8,7 @@ ${CMAKE_SOURCE_DIR}/test/RpcTest.cpp
 ${CMAKE_SOURCE_DIR}/test/HodoscopeTest.cpp
 ${CMAKE_SOURCE_DIR}/test/ShowerDetectionTest.cpp
 ${CMAKE_SOURCE_DIR}/test/EfficiencyTest.cpp
+#${CMAKE_SOURCE_DIR}/test/SingletonTest.cpp
 #${CMAKE_SOURCE_DIR}/test/visualization/TestVisualization.cpp
 
 )
@@ -33,7 +34,7 @@ endmacro()
 macro(build_visualization_executables EXECUTABLES)
   foreach(EXECUTABLE ${EXECUTABLES})
     get_filename_component(TARGET_NAME ${EXECUTABLE} NAME_WE)
-    add_executable(${TARGET_NAME} ${EXECUTABLE} ${CMAKE_SOURCE_DIR}/visualizer/Visualizer.cpp ${CMAKE_SOURCE_DIR}/visualizer/Visualizer.h)
+    add_executable(${TARGET_NAME} ${EXECUTABLE} ${CMAKE_SOURCE_DIR}/visualizer/Visualizer.cpp ${CMAKE_SOURCE_DIR}/visualizer/Visualizer.h) 
     if(EVE)
     target_link_libraries(${TARGET_NAME} ${ROOT_LIBRARIES} Geom Eve)
     else()
@@ -44,5 +45,10 @@ endmacro()
 
 build_executables("${TEST_EXECUTABLES}")
 build_executables("${TEST_VISUALIZATION_EXECUTABLES}")
+
+if(EVE)
+#build_executables(${CMAKE_SOURCE_DIR}/test/SingletonTest.cpp)
+endif()
+
 #build_visualization_executables("${TEST_VISUALIZATION_EXECUTABLES}")
 

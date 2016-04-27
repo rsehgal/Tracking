@@ -423,24 +423,28 @@ void ScintillatorPlane::CreateEvePlane(){
  for(int i=0; i < fScintillatorPlane.size(); i++){
    m.SetDx(-fLength/2.+i*1.6);
   fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
+  // Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
  }
 }
 
 void ScintillatorPlane::CreateEvePlane(double dZ){
  //TEveManager::Create();
- TGeoBBox *box = fScintillatorPlane[0]->GetScintShape();
+ //TGeoBBox *box = fScintillatorPlane[0]->GetScintShape();
  TGeoHMatrix m;
  Double_t trans[3] = { 0., 0., 0. };
  m.SetTranslation(trans);
 
  for(int i=0; i < fScintillatorPlane.size(); i++){
    m.SetDx(-fLength/2.+i*1.6);
+   //m.SetDx(20.);
    m.SetDz(dZ);
    int channelId = fScintillatorPlane[i]->GetChannelId();
    if(channelId > 40 && channelId < 53)
-     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box,2, m );
+     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),2, m );
+     //Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box,2, m );
    else
-     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box,3, m );
+     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
+     //Singleton::instance()->GetEveVisualizer()->AddEveShape(fScintillatorPlane[i]->GetName(), box,3, m );
   //fEve.AddEveShape(fScintillatorPlane[i]->GetName(), box, m );
  }
 }

@@ -12,13 +12,17 @@
 #include "TGeoBBox.h"
 #include "TGeoMatrix.h"
 #include "Eve/EveVisualizer.h"
+#include "Singleton.h"
 
 
 namespace Tracking {
 
+//TEveElementList* EveVisualizer::fEveGeomList = 0;
+
 EveVisualizer::EveVisualizer(){
-  fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
-  fEveGeomList = new TEveElementList("Geometry");
+  //fApp = new TApplication("VecGeom Visualizer", NULL, NULL);
+  //fEveGeomList = Singleton::Get();
+  //fEveGeomList = new TEveElementList("Geometry");
 }
 
 void EveVisualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatrix &mat){
@@ -28,7 +32,8 @@ void EveVisualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, TGeoHMatr
   fEveShape->SetMainColor(kGreen);
   fEveShape->SetMainTransparency(50);
   fEveShape->SetTransMatrix(mat);
-  fEveGeomList->AddElement(fEveShape);
+  //fEveGeomList->AddElement(fEveShape);
+  Singleton::instance()->AddElement(fEveShape);
   
 }
 
@@ -39,7 +44,8 @@ void EveVisualizer::AddEveShape(std::string shapeName,TGeoBBox *shape, int color
   fEveShape->SetMainColor(color);
   fEveShape->SetMainTransparency(50);
   fEveShape->SetTransMatrix(mat);
-  fEveGeomList->AddElement(fEveShape);
+  //fEveGeomList->AddElement(fEveShape);
+  Singleton::instance()->AddElement(fEveShape);
 
 }
 
@@ -49,9 +55,12 @@ void EveVisualizer::ShowEve(){
   Double_t trans[3] = { 0., 0., dZ };
   mat.SetTranslation(trans);
   fEveGeomList->SetTransmatrix(mat);*/
-  gEve->AddGlobalElement(fEveGeomList);
+
+
+  //gEve->AddGlobalElement(fEveGeomList);
+  gEve->AddGlobalElement(Singleton::instance()->GetList());
   gEve->DoRedraw3D();
-  fApp->Run();
+  //fApp->Run();
 }
 
 }//end of Tracking namespace

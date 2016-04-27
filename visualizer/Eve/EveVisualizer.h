@@ -10,17 +10,19 @@
 #include <list>
 #include <memory>
 #include <utility>
+//#include "SingleTon.h"
 class TEveElementList;
 class TEveGeoShape;
 class TApplication;
 class TGeoBBox;
 class TGeoMatrix;
 
+
 namespace Tracking {
 
 class EveVisualizer{
 private:
-  TApplication *fApp;
+  //TApplication *fApp;
   TEveElementList *fEveGeomList;
   TEveGeoShape *fEveShape;
 
