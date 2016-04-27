@@ -139,7 +139,9 @@ public:
   TGeoVolume* GetScintillatorTGeoVolume(){return fScintTGeoVolume;}
   TGeoBBox* GetScintShape();
 
-
+  double GetLength(){return fLength;}
+  double GetBreadth(){return fBreadth;}
+  double GetHeight(){return fHeight;}
 
 };//end of Scintillator class
 

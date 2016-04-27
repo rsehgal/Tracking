@@ -62,10 +62,10 @@ Scintillator::Scintillator(int moduleId):fLength(1.5),fBreadth(50.),fHeight(0.5)
 
 }
 
-Scintillator::Scintillator(int moduleId,bool forRpc):fLength(1.5),fBreadth(50.),fHeight(0.5), fScintHit(false) ,fModuleId(moduleId) {
+Scintillator::Scintillator(int moduleId,bool forRpc):fLength(3.),fBreadth(100.),fHeight(1.0), fScintHit(false) ,fModuleId(moduleId) {
   if(!forRpc){ // Scintillator plane
-    fLength = 9.;
-    fBreadth = 90.;
+    fLength = 18.;
+    fBreadth = 180.;
   }
   fId++;
   fScintId = fId;
@@ -182,7 +182,7 @@ void Scintillator::CreateScintillatorTGeoVolume(){
 #else
 TGeoBBox* Scintillator::GetScintShape(){
   //return new TGeoBBox(fBName.c_str(),fLength/2., fBreadth/2., fHeight/2.);
-  return new TGeoBBox(fBName.c_str(),fLength, fBreadth, fHeight);
+  return new TGeoBBox(fBName.c_str(),fLength/2., fBreadth/2., fHeight/2.);
 }
 #endif
 
@@ -529,18 +529,11 @@ void ScintillatorPlane::CreateEvePlane(double dZ, bool forRpc){
  m.SetTranslation(trans);
 
  for(int i=0; i < fScintillatorPlane.size(); i++){
+     m.SetDx(-fLength/2.+i*fScintillatorPlane[i]->GetLength());
+     m.SetDz(dZ);
+     int channelId = fScintillatorPlane[i]->GetChannelId();
 
-   //std::cout<<"fLength : "<< fLength << " :  X trans : "<< (-fLength/2.+1.6+i*1.6) << std::endl;
-   //m.SetDx(-fLength/2.+i*1.6);
-   if(forRpc)
-     m.SetDx(-fLength/2.+i*3);
-   else
-     m.SetDx(-fLength/2.+i*18);
-
-    m.SetDz(dZ);
-   int channelId = fScintillatorPlane[i]->GetChannelId();
-
-   fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
+     fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),3, m );
 /*
    if(channelId > 40 && channelId < 53)
      fEve.AddEveShape(fScintillatorPlane[i]->GetName(), fScintillatorPlane[0]->GetScintShape(),2, m );
